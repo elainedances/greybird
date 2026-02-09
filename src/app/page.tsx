@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 // Logo Component
 function Logo({ className = "", size = 40 }: { className?: string; size?: number }) {
@@ -335,9 +336,28 @@ function Waitlist() {
     if (!email || !type) return;
     
     setLoading(true);
-    // TODO: Connect to Supabase or other backend
-    await new Promise((r) => setTimeout(r, 1000));
-    setSubmitted(true);
+    
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([{ email, type }]);
+      
+      if (error) {
+        if (error.code === '23505') {
+          // Duplicate email
+          alert('This email is already on the waitlist!');
+        } else {
+          console.error('Error:', error);
+          alert('Something went wrong. Please try again.');
+        }
+      } else {
+        setSubmitted(true);
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Something went wrong. Please try again.');
+    }
+    
     setLoading(false);
   };
 
