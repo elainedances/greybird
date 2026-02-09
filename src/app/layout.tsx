@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   keywords: ["senior professionals", "advisory", "consulting", "part-time work", "remote work", "experts", "freelance", "experienced talent"],
   authors: [{ name: "Greybird" }],
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/favicon-bg.png",
+    apple: "/favicon-bg.png",
   },
   openGraph: {
     title: "Greybird — Experience Meets Opportunity",
