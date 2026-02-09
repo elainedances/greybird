@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #1a1a2e;
+  --color-secondary: #16213e;
+  --color-accent: #e94560;
+  --color-accent-hover: #ff6b6b;
+  --color-grey: #6b7280;
+  --color-light-grey: #f3f4f6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:from-purple-700 hover:to-indigo-700 hover:shadow-lg hover:scale-105;
+}
+
+.btn-secondary {
+  @apply bg-white text-gray-800 px-8 py-4 rounded-xl font-semibold text-lg border-2 border-gray-200 transition-all duration-300 hover:border-purple-400 hover:shadow-lg hover:scale-105;
+}
+
+.card {
+  @apply bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300;
+}
+
+.category-pill {
+  @apply px-6 py-3 bg-white rounded-full font-medium text-gray-700 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-100;
+}
+
+.input-field {
+  @apply w-full px-6 py-4 rounded-xl border-2 border-gray-200 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg;
+}
