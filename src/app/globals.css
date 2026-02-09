@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #1a1a2e;
-  --color-secondary: #16213e;
-  --color-accent: #e94560;
-  --color-accent-hover: #ff6b6b;
-  --color-grey: #6b7280;
-  --color-light-grey: #f3f4f6;
+  /* Greybird color palette - based on logo */
+  --color-primary: #1e293b;      /* Slate 800 - darkest */
+  --color-secondary: #334155;    /* Slate 700 */
+  --color-accent: #475569;       /* Slate 600 */
+  --color-accent-light: #64748b; /* Slate 500 */
+  --color-grey: #94a3b8;         /* Slate 400 */
+  --color-light-grey: #e2e8f0;   /* Slate 200 */
+  --color-highlight: #3b82f6;    /* Blue 500 - for CTAs */
 }
 
 html {
@@ -18,22 +20,26 @@ body {
 }
 
 .gradient-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .btn-primary {
-  @apply bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:from-purple-700 hover:to-indigo-700 hover:shadow-lg hover:scale-105;
+  @apply bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:from-slate-800 hover:to-slate-900 hover:shadow-lg hover:scale-105;
 }
 
 .btn-secondary {
-  @apply bg-white text-gray-800 px-8 py-4 rounded-xl font-semibold text-lg border-2 border-gray-200 transition-all duration-300 hover:border-purple-400 hover:shadow-lg hover:scale-105;
+  @apply bg-white text-slate-800 px-8 py-4 rounded-xl font-semibold text-lg border-2 border-slate-200 transition-all duration-300 hover:border-slate-400 hover:shadow-lg hover:scale-105;
+}
+
+.btn-cta {
+  @apply bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:scale-105;
 }
 
 .card {
@@ -41,9 +47,9 @@ body {
 }
 
 .category-pill {
-  @apply px-6 py-3 bg-white rounded-full font-medium text-gray-700 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-100;
+  @apply px-6 py-3 bg-white rounded-full font-medium text-slate-700 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer border border-slate-100 hover:border-slate-300;
 }
 
 .input-field {
-  @apply w-full px-6 py-4 rounded-xl border-2 border-gray-200 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg;
+  @apply w-full px-6 py-4 rounded-xl border-2 border-slate-200 focus:border-slate-500 focus:outline-none transition-all duration-300 text-lg;
 }

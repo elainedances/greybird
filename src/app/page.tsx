@@ -1,36 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
-// Placeholder Logo Component
-function Logo({ className = "" }: { className?: string }) {
+// Logo Component
+function Logo({ className = "", size = 40 }: { className?: string; size?: number }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <svg
-        width="40"
-        height="40"
-        viewBox="0 0 40 40"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="text-purple-600"
-      >
-        <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" fill="none" />
-        <path
-          d="M12 22C12 22 15 18 20 18C25 18 28 22 28 22"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <circle cx="20" cy="14" r="4" fill="currentColor" />
-        <path
-          d="M26 14L32 10"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      </svg>
-      <span className="text-2xl font-bold text-gray-900">
-        Grey<span className="text-purple-600">bird</span>
+    <div className={`flex items-center gap-3 ${className}`}>
+      <Image 
+        src="/logo.png" 
+        alt="Greybird" 
+        width={size} 
+        height={size}
+        className="object-contain"
+      />
+      <span className="text-2xl font-bold text-slate-800">
+        Grey<span className="text-slate-600">bird</span>
       </span>
     </div>
   );
@@ -39,25 +24,25 @@ function Logo({ className = "" }: { className?: string }) {
 // Navigation
 function Navigation() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Logo />
         <div className="hidden md:flex items-center gap-8">
-          <a href="#how-it-works" className="text-gray-600 hover:text-purple-600 transition-colors font-medium">
+          <a href="#how-it-works" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             How It Works
           </a>
-          <a href="#categories" className="text-gray-600 hover:text-purple-600 transition-colors font-medium">
+          <a href="#categories" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Categories
           </a>
-          <a href="#join" className="text-gray-600 hover:text-purple-600 transition-colors font-medium">
+          <a href="#join" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Join Waitlist
           </a>
         </div>
         <div className="flex items-center gap-4">
-          <button className="hidden sm:block text-gray-600 hover:text-purple-600 transition-colors font-medium">
+          <button className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Log In
           </button>
-          <a href="#join" className="bg-purple-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors">
+          <a href="#join" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
             Get Started
           </a>
         </div>
@@ -69,22 +54,22 @@ function Navigation() {
 // Hero Section
 function Hero() {
   return (
-    <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-purple-50 via-white to-indigo-50">
+    <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <div className="max-w-6xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
+        <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-600"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-600"></span>
           </span>
           Now accepting early signups
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-6 leading-tight">
           Experience Meets<br />
           <span className="gradient-text">Opportunity</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
           Connect with senior professionals for part-time projects, advisory sessions, and flexible work. 
           Access <strong>decades of expertise</strong> on demand.
         </p>
@@ -107,16 +92,16 @@ function Hero() {
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 md:gap-16">
           <div className="text-center">
-            <div className="text-4xl font-bold text-purple-600">20+</div>
-            <div className="text-gray-500 font-medium">Years Avg. Experience</div>
+            <div className="text-4xl font-bold text-slate-700">20+</div>
+            <div className="text-slate-500 font-medium">Years Avg. Experience</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-purple-600">100%</div>
-            <div className="text-gray-500 font-medium">Remote</div>
+            <div className="text-4xl font-bold text-slate-700">100%</div>
+            <div className="text-slate-500 font-medium">Remote</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-purple-600">Direct</div>
-            <div className="text-gray-500 font-medium">Contact</div>
+            <div className="text-4xl font-bold text-slate-700">Direct</div>
+            <div className="text-slate-500 font-medium">Contact</div>
           </div>
         </div>
       </div>
@@ -141,10 +126,10 @@ function Categories() {
     <section id="categories" className="py-20 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
             Find Expertise In Every Field
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Browse senior professionals across industries, ready for advisory calls, projects, or part-time collaboration.
           </p>
         </div>
@@ -153,11 +138,11 @@ function Categories() {
           {categories.map((cat) => (
             <div
               key={cat.name}
-              className="category-pill flex flex-col items-center py-6 hover:border-purple-300"
+              className="category-pill flex flex-col items-center py-6"
             >
               <span className="text-3xl mb-2">{cat.icon}</span>
-              <span className="font-semibold text-gray-800">{cat.name}</span>
-              <span className="text-sm text-gray-400 mt-1">{cat.count}</span>
+              <span className="font-semibold text-slate-800">{cat.name}</span>
+              <span className="text-sm text-slate-400 mt-1">{cat.count}</span>
             </div>
           ))}
         </div>
@@ -208,13 +193,13 @@ function ValueProps() {
   ];
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-purple-50">
+    <section className="py-20 px-6 bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
             Why Greybird?
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Built for companies who need senior expertise without the overhead of full-time hires or expensive consulting firms.
           </p>
         </div>
@@ -222,12 +207,12 @@ function ValueProps() {
         <div className="grid md:grid-cols-2 gap-8">
           {props.map((prop) => (
             <div key={prop.title} className="card flex gap-6">
-              <div className="flex-shrink-0 w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600">
+              <div className="flex-shrink-0 w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600">
                 {prop.icon}
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{prop.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{prop.description}</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{prop.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{prop.description}</p>
               </div>
             </div>
           ))}
@@ -243,17 +228,17 @@ function HowItWorks() {
     <section id="how-it-works" className="py-20 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
             How It Works
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-slate-600">
             Simple for both sides of the marketplace
           </p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-12">
           {/* For Companies */}
-          <div className="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-3xl p-8 text-white">
+          <div className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl p-8 text-white">
             <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm font-medium mb-6">
               🏢 For Companies
             </div>
@@ -284,7 +269,7 @@ function HowItWorks() {
           </div>
 
           {/* For Experts */}
-          <div className="bg-gray-900 rounded-3xl p-8 text-white">
+          <div className="bg-slate-900 rounded-3xl p-8 text-white">
             <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm font-medium mb-6">
               👤 For Experts
             </div>
@@ -322,15 +307,15 @@ function HowItWorks() {
 // Testimonial Section (Placeholder)
 function Testimonial() {
   return (
-    <section className="py-20 px-6 bg-gray-50">
+    <section className="py-20 px-6 bg-slate-50">
       <div className="max-w-4xl mx-auto text-center">
-        <svg className="w-12 h-12 text-purple-300 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
+        <svg className="w-12 h-12 text-slate-300 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
         </svg>
-        <blockquote className="text-2xl md:text-3xl font-medium text-gray-700 mb-8 leading-relaxed">
+        <blockquote className="text-2xl md:text-3xl font-medium text-slate-700 mb-8 leading-relaxed">
           &ldquo;Perfect for tapping into senior expertise without the overhead of full-time hires or expensive consulting firms.&rdquo;
         </blockquote>
-        <div className="text-gray-500">
+        <div className="text-slate-500">
           — Early beta tester
         </div>
       </div>
@@ -357,7 +342,7 @@ function Waitlist() {
   };
 
   return (
-    <section id="join" className="py-20 px-6 bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-700">
+    <section id="join" className="py-20 px-6 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900">
       <div className="max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
           🚀 Be First In Line
@@ -367,7 +352,7 @@ function Waitlist() {
           Join the Waitlist
         </h2>
         
-        <p className="text-xl text-purple-100 mb-10 max-w-xl mx-auto">
+        <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto">
           Get early access when we launch. We&apos;ll notify you as soon as Greybird goes live.
         </p>
         
@@ -375,7 +360,7 @@ function Waitlist() {
           <div className="bg-white/20 backdrop-blur rounded-2xl p-8 max-w-md mx-auto">
             <div className="text-5xl mb-4">🎉</div>
             <h3 className="text-2xl font-bold text-white mb-2">You&apos;re on the list!</h3>
-            <p className="text-purple-100">We&apos;ll be in touch soon.</p>
+            <p className="text-slate-300">We&apos;ll be in touch soon.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -391,7 +376,7 @@ function Waitlist() {
             </div>
             
             <div className="flex gap-4 mb-6 justify-center">
-              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "company" ? "bg-white border-purple-300" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
+              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "company" ? "bg-white border-slate-300" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
                 <input
                   type="radio"
                   name="type"
@@ -400,9 +385,9 @@ function Waitlist() {
                   onChange={() => setType("company")}
                   className="sr-only"
                 />
-                <span className={type === "company" ? "text-gray-800" : ""}>🏢 I&apos;m hiring</span>
+                <span className={type === "company" ? "text-slate-800" : ""}>🏢 I&apos;m hiring</span>
               </label>
-              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "expert" ? "bg-white border-purple-300" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
+              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "expert" ? "bg-white border-slate-300" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
                 <input
                   type="radio"
                   name="type"
@@ -411,14 +396,14 @@ function Waitlist() {
                   onChange={() => setType("expert")}
                   className="sr-only"
                 />
-                <span className={type === "expert" ? "text-gray-800" : ""}>👤 I&apos;m an expert</span>
+                <span className={type === "expert" ? "text-slate-800" : ""}>👤 I&apos;m an expert</span>
               </label>
             </div>
             
             <button
               type="submit"
               disabled={loading || !email || !type}
-              className="w-full bg-white text-purple-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-purple-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-white text-slate-800 px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Joining..." : "Join Waitlist →"}
             </button>
@@ -432,10 +417,21 @@ function Waitlist() {
 // Footer
 function Footer() {
   return (
-    <footer className="py-12 px-6 bg-gray-900 text-gray-400">
+    <footer className="py-12 px-6 bg-slate-900 text-slate-400">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <Logo className="[&_span]:text-white [&_svg]:text-purple-400" />
+          <div className="flex items-center gap-3">
+            <Image 
+              src="/logo.png" 
+              alt="Greybird" 
+              width={32} 
+              height={32}
+              className="object-contain brightness-0 invert opacity-80"
+            />
+            <span className="text-xl font-bold text-white">
+              Grey<span className="text-slate-400">bird</span>
+            </span>
+          </div>
           <div className="flex gap-6 text-sm">
             <a href="#" className="hover:text-white transition-colors">Privacy</a>
             <a href="#" className="hover:text-white transition-colors">Terms</a>
