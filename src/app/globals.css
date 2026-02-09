@@ -50,6 +50,15 @@ body {
   @apply px-6 py-3 bg-white rounded-full font-medium text-slate-700 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer border border-slate-100 hover:border-slate-300;
 }
 
+.category-icon {
+  filter: grayscale(100%) opacity(0.7);
+  transition: filter 0.3s ease;
+}
+
+.category-pill:hover .category-icon {
+  filter: grayscale(0%) opacity(1);
+}
+
 .input-field {
   @apply w-full px-6 py-4 rounded-xl border-2 border-slate-200 focus:border-slate-500 focus:outline-none transition-all duration-300 text-lg;
 }

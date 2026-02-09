@@ -141,7 +141,7 @@ function Categories() {
               key={cat.name}
               className="category-pill flex flex-col items-center py-6"
             >
-              <span className="text-3xl mb-2">{cat.icon}</span>
+              <span className="text-3xl mb-2 category-icon">{cat.icon}</span>
               <span className="font-semibold text-slate-800">{cat.name}</span>
               <span className="text-sm text-slate-400 mt-1">{cat.count}</span>
             </div>
