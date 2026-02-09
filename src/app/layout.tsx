@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   description: "Connect with senior professionals for part-time projects, advisory sessions, and flexible work. Access 20+ years of industry expertise on demand.",
   keywords: ["senior professionals", "advisory", "consulting", "part-time work", "remote work", "experts", "freelance", "experienced talent"],
   authors: [{ name: "Greybird" }],
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Greybird — Experience Meets Opportunity",
     description: "Connect with senior professionals for part-time projects, advisory sessions, and flexible work.",
