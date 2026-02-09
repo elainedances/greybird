@@ -365,7 +365,7 @@ function Waitlist() {
     <section id="join" className="py-20 px-6 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900">
       <div className="max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
-          🚀 Be First In Line
+          <span className="category-icon">🚀</span> Be First In Line
         </div>
         
         <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -390,7 +390,7 @@ function Waitlist() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="input-field w-full text-center"
+                className="input-dark w-full text-center"
                 required
               />
             </div>
