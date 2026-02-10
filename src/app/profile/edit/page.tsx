@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import AvatarUpload from "@/components/AvatarUpload";
 
 const CATEGORIES = [
   "Tech & IT",
@@ -203,6 +204,19 @@ export default function EditProfilePage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Avatar */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-6">Profile Photo</h2>
+            <div className="flex justify-center">
+              <AvatarUpload
+                userId={profile.id}
+                currentUrl={profile.avatar_url}
+                onUpload={(url) => updateProfile("avatar_url", url || null)}
+                size={120}
+              />
+            </div>
+          </section>
+
           {/* Basic Info */}
           <section className="bg-white rounded-xl border border-slate-200 p-6">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Basic Information</h2>

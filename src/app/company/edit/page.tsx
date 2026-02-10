@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import AvatarUpload from "@/components/AvatarUpload";
 
 const INDUSTRIES = [
   "Technology",
@@ -196,6 +197,19 @@ export default function EditCompanyPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Company Logo */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-6">Company Logo</h2>
+            <div className="flex justify-center">
+              <AvatarUpload
+                userId={company.id}
+                currentUrl={company.logo_url}
+                onUpload={(url) => updateCompany("logo_url", url || null)}
+                size={120}
+              />
+            </div>
+          </section>
+
           {/* Basic Info */}
           <section className="bg-white rounded-xl border border-slate-200 p-6">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Company Information</h2>
