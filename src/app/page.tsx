@@ -464,8 +464,8 @@ function Footer() {
             </span>
           </div>
           <div className="flex gap-6 text-sm">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
+            <a href="/terms" className="hover:text-white transition-colors">Terms</a>
             <a href="mailto:hello@greybird.pro" className="hover:text-white transition-colors">Contact</a>
           </div>
           <div className="text-sm">
