@@ -50,8 +50,8 @@ export default function Navigation({ transparent = false }: NavigationProps) {
           <Link href="/companies" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Browse Companies
           </Link>
-          <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
-            Blog
+          <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            About
           </Link>
         </div>
 
