@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
+import { ContactForm } from "./contact-form";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -130,19 +131,8 @@ export default async function ExpertProfilePage({ params }: Props) {
               )}
             </div>
 
-            {/* Contact Button */}
-            <div className="flex gap-3">
-              {profile.contact_email && (
-                <a
-                  href={`mailto:${profile.contact_email}`}
-                  className="inline-flex items-center gap-2 bg-slate-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-900 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Contact
-                </a>
-              )}
+            {/* Contact Buttons */}
+            <div className="flex flex-wrap gap-3">
               {profile.linkedin_url && (
                 <a
                   href={profile.linkedin_url}
@@ -172,6 +162,13 @@ export default async function ExpertProfilePage({ params }: Props) {
             </div>
           </div>
         </div>
+
+        {/* Contact Form */}
+        {profile.contact_email && (
+          <section className="mt-8">
+            <ContactForm expertId={profile.id} expertName={profile.full_name || "this expert"} />
+          </section>
+        )}
 
         {/* Bio */}
         {profile.bio && (
