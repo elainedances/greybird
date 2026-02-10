@@ -9,6 +9,10 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image() {
+  // Fetch logo from production URL
+  const logoResponse = await fetch("https://greybird.pro/logo.png");
+  const logoData = await logoResponse.arrayBuffer();
+
   return new ImageResponse(
     (
       <div
@@ -23,7 +27,7 @@ export default async function Image() {
           fontFamily: "Inter, system-ui, sans-serif",
         }}
       >
-        {/* Bird Icon */}
+        {/* Logo + Brand Name */}
         <div
           style={{
             display: "flex",
@@ -32,21 +36,14 @@ export default async function Image() {
             marginBottom: "30px",
           }}
         >
-          <svg
-            width="120"
-            height="120"
-            viewBox="0 0 100 100"
-            fill="none"
-            style={{ marginRight: "20px" }}
-          >
-            {/* Simplified geometric bird */}
-            <circle cx="50" cy="50" r="45" fill="#64748b" />
-            <path
-              d="M30 55 L50 35 L70 55 L50 45 Z"
-              fill="#cbd5e1"
-            />
-            <circle cx="45" cy="45" r="5" fill="#1e293b" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={logoData as unknown as string}
+            width={140}
+            height={140}
+            alt="Greybird Logo"
+            style={{ marginRight: "24px" }}
+          />
           <span
             style={{
               fontSize: "72px",
