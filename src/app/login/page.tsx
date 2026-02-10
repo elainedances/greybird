@@ -102,6 +102,11 @@ function LoginForm() {
       {error && (
         <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
           {error}
+          {error.toLowerCase().includes("not found") || error.toLowerCase().includes("no user") ? (
+            <span className="block mt-2">
+              Don&apos;t have an account? <Link href="/signup" className="underline font-medium">Sign up here</Link>
+            </span>
+          ) : null}
         </div>
       )}
 
