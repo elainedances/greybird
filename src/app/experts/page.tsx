@@ -8,15 +8,57 @@ export const metadata: Metadata = {
   description: "Find experienced professionals for part-time projects, advisory sessions, and flexible work.",
 };
 
-export default async function ExpertsPage() {
+const CATEGORIES = [
+  "Tech & IT",
+  "Finance & Accounting",
+  "Marketing & Content",
+  "HR & Recruiting",
+  "Engineering",
+  "Legal & Compliance",
+  "Strategy & Consulting",
+  "Operations",
+  "Sales",
+  "Other",
+];
+
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function ExpertsPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams;
+  const category = typeof params.category === "string" ? params.category : undefined;
+  const availability = typeof params.availability === "string" ? params.availability : undefined;
+  const search = typeof params.search === "string" ? params.search : undefined;
+
   const supabase = await createClient();
 
-  const { data: experts } = await supabase
+  let query = supabase
     .from("profiles")
     .select("id, full_name, headline, location, years_experience, availability, categories, hourly_rate_min, hourly_rate_max")
     .eq("is_public", true)
-    .eq("user_type", "expert")
-    .order("created_at", { ascending: false });
+    .eq("user_type", "expert");
+
+  // Filter by category
+  if (category) {
+    query = query.contains("categories", [category]);
+  }
+
+  // Filter by availability
+  if (availability) {
+    query = query.eq("availability", availability);
+  }
+
+  const { data: experts } = await query.order("created_at", { ascending: false });
+
+  // Client-side search filter (for name/headline)
+  let filteredExperts = experts || [];
+  if (search) {
+    const searchLower = search.toLowerCase();
+    filteredExperts = filteredExperts.filter(
+      (e) =>
+        e.full_name?.toLowerCase().includes(searchLower) ||
+        e.headline?.toLowerCase().includes(searchLower)
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -52,23 +94,112 @@ export default async function ExpertsPage() {
           </p>
         </div>
 
+        {/* Filters */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+          <form className="flex flex-col md:flex-row gap-4">
+            {/* Search */}
+            <div className="flex-grow">
+              <input
+                type="text"
+                name="search"
+                defaultValue={search}
+                placeholder="Search by name or headline..."
+                className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+              />
+            </div>
+
+            {/* Category */}
+            <select
+              name="category"
+              defaultValue={category || ""}
+              className="px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none bg-white min-w-[180px]"
+            >
+              <option value="">All Categories</option>
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+
+            {/* Availability */}
+            <select
+              name="availability"
+              defaultValue={availability || ""}
+              className="px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none bg-white min-w-[160px]"
+            >
+              <option value="">Any Availability</option>
+              <option value="available">Available Now</option>
+              <option value="limited">Limited</option>
+            </select>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition-colors"
+            >
+              Search
+            </button>
+          </form>
+
+          {/* Active Filters */}
+          {(category || availability || search) && (
+            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+              <span className="text-sm text-slate-500">Active filters:</span>
+              {search && (
+                <Link
+                  href={`/experts?${new URLSearchParams({ ...(category && { category }), ...(availability && { availability }) }).toString()}`}
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm hover:bg-slate-200"
+                >
+                  &quot;{search}&quot; <span className="text-slate-400">×</span>
+                </Link>
+              )}
+              {category && (
+                <Link
+                  href={`/experts?${new URLSearchParams({ ...(search && { search }), ...(availability && { availability }) }).toString()}`}
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm hover:bg-slate-200"
+                >
+                  {category} <span className="text-slate-400">×</span>
+                </Link>
+              )}
+              {availability && (
+                <Link
+                  href={`/experts?${new URLSearchParams({ ...(search && { search }), ...(category && { category }) }).toString()}`}
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm hover:bg-slate-200"
+                >
+                  {availability} <span className="text-slate-400">×</span>
+                </Link>
+              )}
+              <Link
+                href="/experts"
+                className="text-sm text-slate-500 hover:text-slate-700 ml-2"
+              >
+                Clear all
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Results Count */}
+        <p className="text-sm text-slate-500 mb-4">
+          {filteredExperts.length} expert{filteredExperts.length !== 1 ? "s" : ""} found
+        </p>
+
         {/* Experts Grid */}
-        {experts && experts.length > 0 ? (
+        {filteredExperts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {experts.map((expert) => (
+            {filteredExperts.map((expert) => (
               <ExpertCard key={expert.id} expert={expert} />
             ))}
           </div>
         ) : (
           <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
-            <div className="text-4xl mb-4">🐦</div>
-            <h2 className="text-xl font-semibold text-slate-900 mb-2">No experts yet</h2>
-            <p className="text-slate-600 mb-6">Be the first to join our community of experienced professionals.</p>
+            <div className="text-4xl mb-4">🔍</div>
+            <h2 className="text-xl font-semibold text-slate-900 mb-2">No experts found</h2>
+            <p className="text-slate-600 mb-6">Try adjusting your filters or search terms.</p>
             <Link 
-              href="/signup" 
-              className="inline-flex items-center gap-2 bg-slate-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-900 transition-colors"
+              href="/experts" 
+              className="inline-flex items-center gap-2 text-slate-800 font-medium hover:underline"
             >
-              Create Your Profile
+              Clear all filters
             </Link>
           </div>
         )}
