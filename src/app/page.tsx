@@ -110,14 +110,14 @@ function Hero() {
             </div>
           </div>
 
-          {/* Right: Illustration */}
+          {/* Right: Hero Image */}
           <div className="hidden lg:block">
             <Image 
-              src="/hero-illustration.svg" 
-              alt="Connecting experienced professionals with companies" 
+              src="/hero-image.webp" 
+              alt="Connecting talent to opportunity" 
               width={600} 
-              height={450}
-              className="w-full h-auto"
+              height={600}
+              className="w-full h-auto rounded-2xl"
               priority
             />
           </div>
