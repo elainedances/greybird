@@ -1,10 +1,23 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import Script from "next/script";
 import { createClient } from "@/lib/supabase/client";
+
+const TURNSTILE_SITE_KEY = "0x4AAAAAAAcaH98iceWTf3HhN";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: { sitekey: string; callback: (token: string) => void }) => string;
+      reset: (widgetId?: string) => void;
+    };
+    onTurnstileLoad?: () => void;
+  }
+}
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -12,10 +25,29 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/dashboard";
   const supabase = createClient();
+
+  useEffect(() => {
+    const renderTurnstile = () => {
+      if (window.turnstile && turnstileRef.current && !turnstileRef.current.hasChildNodes()) {
+        window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token: string) => setCaptchaToken(token),
+        });
+      }
+    };
+    
+    if (window.turnstile) {
+      renderTurnstile();
+    } else {
+      window.onTurnstileLoad = renderTurnstile;
+    }
+  }, []);
 
   const handleSocialLogin = async (provider: "google" | "linkedin_oidc") => {
     setSocialLoading(provider);
@@ -36,12 +68,21 @@ function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!captchaToken) {
+      setError("Please complete the captcha");
+      return;
+    }
+    
     setLoading(true);
     setError(null);
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
+      options: {
+        captchaToken,
+      },
     });
 
     if (error) {
@@ -149,14 +190,24 @@ function LoginForm() {
           />
         </div>
 
+        {/* Turnstile Captcha */}
+        <div ref={turnstileRef} className="flex justify-center" />
+
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !captchaToken}
           className="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-slate-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Logging in..." : "Log in"}
         </button>
       </form>
+      
+      {/* Turnstile Script */}
+      <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad"
+        async
+        defer
+      />
 
       <p className="text-center text-slate-600 mt-6">
         Don&apos;t have an account?{" "}

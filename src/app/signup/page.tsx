@@ -1,10 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Script from "next/script";
 import { createClient } from "@/lib/supabase/client";
+
+const TURNSTILE_SITE_KEY = "0x4AAAAAAAcaH98iceWTf3HhN";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: { sitekey: string; callback: (token: string) => void }) => string;
+      reset: (widgetId?: string) => void;
+    };
+    onTurnstileLoad?: () => void;
+  }
+}
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -14,8 +27,30 @@ export default function SignupPage() {
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const supabase = createClient();
+
+  useEffect(() => {
+    // Render Turnstile widget when script loads
+    const renderTurnstile = () => {
+      if (window.turnstile && turnstileRef.current && !turnstileRef.current.hasChildNodes()) {
+        window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token: string) => setCaptchaToken(token),
+        });
+      }
+    };
+    
+    // Check if already loaded
+    if (window.turnstile) {
+      renderTurnstile();
+    } else {
+      // Wait for script to load
+      window.onTurnstileLoad = renderTurnstile;
+    }
+  }, []);
 
   const handleSocialLogin = async (provider: "google" | "linkedin_oidc") => {
     setSocialLoading(provider);
@@ -40,6 +75,12 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!captchaToken) {
+      setError("Please complete the captcha");
+      return;
+    }
+    
     setLoading(true);
     setError(null);
 
@@ -51,6 +92,7 @@ export default function SignupPage() {
           user_type: userType,
         },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
+        captchaToken,
       },
     });
 
@@ -223,14 +265,24 @@ export default function SignupPage() {
               <p className="text-xs text-slate-500 mt-1">Minimum 6 characters</p>
             </div>
 
+            {/* Turnstile Captcha */}
+            <div ref={turnstileRef} className="flex justify-center" />
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !captchaToken}
               className="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-slate-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating account..." : "Create account"}
             </button>
           </form>
+          
+          {/* Turnstile Script */}
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad"
+            async
+            defer
+          />
 
           <p className="text-center text-slate-600 mt-6">
             Already have an account?{" "}
