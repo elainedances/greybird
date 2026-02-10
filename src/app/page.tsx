@@ -351,6 +351,17 @@ function Waitlist() {
           alert('Something went wrong. Please try again.');
         }
       } else {
+        // Send welcome email
+        try {
+          await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, type }),
+          });
+        } catch (emailErr) {
+          // Don't block signup if email fails
+          console.error('Email error:', emailErr);
+        }
         setSubmitted(true);
       }
     } catch (err) {
