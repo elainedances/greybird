@@ -12,7 +12,16 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const userType = user.user_metadata?.user_type || "expert";
+  // Fetch profile data
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  const userType = profile?.user_type || user.user_metadata?.user_type || "expert";
+  const isProfileComplete = profile?.full_name && profile?.headline;
+  const isPublic = profile?.is_public || false;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -36,7 +45,7 @@ export default async function DashboardPage() {
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            Welcome to Greybird! 🐦
+            {profile?.full_name ? `Welcome back, ${profile.full_name.split(" ")[0]}!` : "Welcome to Greybird!"} 🐦
           </h1>
           <p className="text-slate-600">
             You&apos;re signed in as {userType === "expert" ? "an expert" : "a company"}.
@@ -48,8 +57,10 @@ export default async function DashboardPage() {
           {userType === "expert" ? (
             <>
               <DashboardCard
-                title="Complete Your Profile"
-                description="Add your experience, skills, and availability to get discovered by companies."
+                title={isProfileComplete ? "Edit Your Profile" : "Complete Your Profile"}
+                description={isProfileComplete 
+                  ? "Update your experience, skills, and availability."
+                  : "Add your experience, skills, and availability to get discovered by companies."}
                 icon="👤"
                 href="/profile/edit"
                 cta="Edit Profile"
@@ -64,10 +75,12 @@ export default async function DashboardPage() {
               />
               <DashboardCard
                 title="Your Visibility"
-                description="Your profile is not yet visible to companies. Complete it to get listed."
-                icon="👁️"
+                description={isPublic 
+                  ? "Your profile is visible to companies. They can find and contact you."
+                  : "Your profile is hidden. Make it public to get discovered."}
+                icon={isPublic ? "✅" : "👁️"}
                 href="/profile/edit"
-                cta="Make Visible"
+                cta={isPublic ? "Manage Visibility" : "Make Visible"}
               />
             </>
           ) : (
@@ -103,8 +116,16 @@ export default async function DashboardPage() {
           <h2 className="text-lg font-semibold text-slate-900 mb-4">Account Status</h2>
           <div className="grid md:grid-cols-3 gap-4">
             <StatusItem label="Email" value={user.email || "Not set"} status="verified" />
-            <StatusItem label="Profile" value="Incomplete" status="pending" />
-            <StatusItem label="Visibility" value="Hidden" status="pending" />
+            <StatusItem 
+              label="Profile" 
+              value={isProfileComplete ? "Complete" : "Incomplete"} 
+              status={isProfileComplete ? "verified" : "pending"} 
+            />
+            <StatusItem 
+              label="Visibility" 
+              value={isPublic ? "Public" : "Hidden"} 
+              status={isPublic ? "verified" : "pending"} 
+            />
           </div>
         </div>
       </main>

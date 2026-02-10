@@ -33,6 +33,7 @@ type Profile = {
   availability: string | null;
   categories: string[] | null;
   skills: string[] | null;
+  contact_email: string | null;
   linkedin_url: string | null;
   website_url: string | null;
   preferred_contact: string | null;
@@ -81,6 +82,7 @@ export default function EditProfilePage() {
           availability: null,
           categories: [],
           skills: [],
+          contact_email: user.email || null,
           linkedin_url: null,
           website_url: null,
           preferred_contact: "email",
@@ -112,11 +114,11 @@ export default function EditProfilePage() {
 
     if (error) {
       setError(error.message);
+      setSaving(false);
     } else {
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 3000);
+      // Redirect to dashboard after successful save
+      router.push("/dashboard");
     }
-    setSaving(false);
   };
 
   const updateProfile = (field: keyof Profile, value: unknown) => {
@@ -403,6 +405,21 @@ export default function EditProfilePage() {
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Contact Information</h2>
             
             <div className="grid md:grid-cols-2 gap-6">
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Contact Email *
+                </label>
+                <input
+                  type="email"
+                  value={profile.contact_email || ""}
+                  onChange={(e) => updateProfile("contact_email", e.target.value || null)}
+                  placeholder="contact@example.com"
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+                />
+                <p className="text-xs text-slate-500 mt-1">This email will be visible to people who want to contact you</p>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   LinkedIn URL
