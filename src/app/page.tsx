@@ -40,10 +40,10 @@ function Navigation() {
           </a>
         </div>
         <div className="flex items-center gap-4">
-          <button className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          <a href="/login" className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Log In
-          </button>
-          <a href="#join" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
+          </a>
+          <a href="/signup" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
             Get Started
           </a>
         </div>
