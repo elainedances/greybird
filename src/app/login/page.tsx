@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/client";
 
-const TURNSTILE_SITE_KEY = "0x4AAAAAAAcaH98iceWTf3HhN";
+const TURNSTILE_SITE_KEY = "0x4AAAAAACaH98iceWTf3HhN";
 
 declare global {
   interface Window {
