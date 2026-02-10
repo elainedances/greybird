@@ -35,6 +35,9 @@ function Navigation() {
           <a href="#categories" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Categories
           </a>
+          <a href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            Blog
+          </a>
           <a href="#join" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Join Waitlist
           </a>
@@ -305,24 +308,29 @@ function HowItWorks() {
   );
 }
 
-// Testimonial Section (Placeholder)
-function Testimonial() {
-  return (
-    <section className="py-20 px-6 bg-slate-50">
-      <div className="max-w-4xl mx-auto text-center">
-        <svg className="w-12 h-12 text-slate-300 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-        </svg>
-        <blockquote className="text-2xl md:text-3xl font-medium text-slate-700 mb-8 leading-relaxed">
-          &ldquo;Perfect for tapping into senior expertise without the overhead of full-time hires or expensive consulting firms.&rdquo;
-        </blockquote>
-        <div className="text-slate-500">
-          — Early beta tester
-        </div>
-      </div>
-    </section>
-  );
-}
+// Testimonial Section (Ready to add when we have real quotes)
+// Usage: Add <Testimonials /> between <HowItWorks /> and <Waitlist />
+// 
+// function Testimonials() {
+//   const testimonials = [
+//     { quote: "Quote here", author: "Name", role: "Title, Company" },
+//   ];
+//   return (
+//     <section className="py-20 px-6 bg-slate-50">
+//       <div className="max-w-4xl mx-auto text-center">
+//         <svg className="w-12 h-12 text-slate-300 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
+//           <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+//         </svg>
+//         <blockquote className="text-2xl md:text-3xl font-medium text-slate-700 mb-8 leading-relaxed">
+//           &ldquo;{testimonials[0].quote}&rdquo;
+//         </blockquote>
+//         <div className="text-slate-500">
+//           — {testimonials[0].author}, {testimonials[0].role}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 // Waitlist Section
 function Waitlist() {
@@ -464,6 +472,7 @@ function Footer() {
             </span>
           </div>
           <div className="flex gap-6 text-sm">
+            <a href="/blog" className="hover:text-white transition-colors">Blog</a>
             <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
             <a href="/terms" className="hover:text-white transition-colors">Terms</a>
             <a href="mailto:hello@greybird.pro" className="hover:text-white transition-colors">Contact</a>
@@ -486,7 +495,6 @@ export default function Home() {
       <Categories />
       <ValueProps />
       <HowItWorks />
-      <Testimonial />
       <Waitlist />
       <Footer />
     </main>
