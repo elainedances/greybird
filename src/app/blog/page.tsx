@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/blog";
+import Navigation from "@/components/Navigation";
 
 export const metadata = {
   title: "Blog | Greybird",
@@ -12,28 +13,7 @@ export default function BlogPage() {
 
   return (
     <main className="min-h-screen bg-slate-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
-            <span className="text-2xl font-bold text-slate-800">
-              Grey<span className="text-slate-600">bird</span>
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/experts" className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
-              Browse Experts
-            </Link>
-            <Link href="/login" className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
-              Log In
-            </Link>
-            <Link href="/signup" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Navigation transparent />
 
       {/* Header */}
       <section className="pt-32 pb-16 px-6 bg-white">
