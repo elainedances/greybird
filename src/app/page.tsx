@@ -35,8 +35,8 @@ function Navigation() {
           <a href="/companies" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Browse Companies
           </a>
-          <a href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
-            Blog
+          <a href="/about" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            About
           </a>
         </div>
         <div className="flex items-center gap-4">
