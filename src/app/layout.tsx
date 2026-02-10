@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://greybird.pro"),
   title: "Greybird — Experience Meets Opportunity",
   description: "Connect with senior professionals for part-time projects, advisory sessions, and flexible work. Access 20+ years of industry expertise on demand.",
   keywords: ["senior professionals", "advisory", "consulting", "part-time work", "remote work", "experts", "freelance", "experienced talent"],
@@ -16,11 +18,20 @@ export const metadata: Metadata = {
     url: "https://greybird.pro",
     siteName: "Greybird",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Greybird — Experience Meets Opportunity",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Greybird — Experience Meets Opportunity",
     description: "Connect with senior professionals for part-time projects, advisory sessions, and flexible work.",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -42,6 +53,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-gray-50">
         {children}
+        <Analytics />
       </body>
     </html>
   );
