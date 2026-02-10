@@ -29,17 +29,14 @@ function Navigation() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Logo />
         <div className="hidden md:flex items-center gap-8">
-          <a href="#how-it-works" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
-            How It Works
+          <a href="/experts" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            Find Experts
           </a>
-          <a href="#categories" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
-            Categories
+          <a href="/companies" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            Browse Companies
           </a>
           <a href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
             Blog
-          </a>
-          <a href="#join" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
-            Join Waitlist
           </a>
         </div>
         <div className="flex items-center gap-4">

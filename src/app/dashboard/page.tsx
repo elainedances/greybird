@@ -86,12 +86,11 @@ export default async function DashboardPage() {
           ) : (
             <>
               <DashboardCard
-                title="Post a Need"
-                description="Describe what kind of expertise you're looking for."
-                icon="📝"
-                href="#"
-                cta="Coming Soon"
-                disabled
+                title="Company Profile"
+                description="Set up your company profile to attract the best talent."
+                icon="🏢"
+                href="/company/edit"
+                cta="Edit Profile"
               />
               <DashboardCard
                 title="Browse Experts"
@@ -101,11 +100,11 @@ export default async function DashboardPage() {
                 cta="Browse Experts"
               />
               <DashboardCard
-                title="Company Profile"
-                description="Set up your company profile to attract the best talent."
-                icon="🏢"
-                href="/profile/edit"
-                cta="Edit Profile"
+                title="Your Visibility"
+                description="Make your company visible so experts can find and apply to you."
+                icon="👁️"
+                href="/company/edit"
+                cta="Manage Visibility"
               />
             </>
           )}
