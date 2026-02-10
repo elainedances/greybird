@@ -55,54 +55,71 @@ function Navigation() {
 // Hero Section
 function Hero() {
   return (
-    <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <div className="max-w-6xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-600"></span>
-          </span>
-          Now accepting early signups
-        </div>
-        
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-6 leading-tight">
-          Experience Meets<br />
-          <span className="gradient-text">Opportunity</span>
-        </h1>
-        
-        <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-          Connect with senior professionals for part-time projects, advisory sessions, and flexible work. 
-          Access <strong>decades of expertise</strong> on demand.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <a href="#join" className="btn-primary flex items-center justify-center gap-2">
-            <span>I&apos;m Hiring Talent</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-          <a href="#join" className="btn-secondary flex items-center justify-center gap-2">
-            <span>I&apos;m an Expert</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </a>
-        </div>
+    <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Text Content */}
+          <div className="text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-600"></span>
+              </span>
+              Now accepting early signups
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 mb-6 leading-tight">
+              Experience Meets<br />
+              <span className="gradient-text">Opportunity</span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-slate-600 mb-10 leading-relaxed">
+              Connect with senior professionals for part-time projects, advisory sessions, and flexible work. 
+              Access <strong>decades of expertise</strong> on demand.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+              <a href="#join" className="btn-primary flex items-center justify-center gap-2">
+                <span>I&apos;m Hiring Talent</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a href="#join" className="btn-secondary flex items-center justify-center gap-2">
+                <span>I&apos;m an Expert</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </a>
+            </div>
 
-        {/* Stats */}
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-slate-700">20+</div>
-            <div className="text-slate-500 font-medium">Years Avg. Experience</div>
+            {/* Stats */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-8">
+              <div className="text-center lg:text-left">
+                <div className="text-3xl font-bold text-slate-700">20+</div>
+                <div className="text-slate-500 font-medium text-sm">Years Avg. Experience</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-3xl font-bold text-slate-700">100%</div>
+                <div className="text-slate-500 font-medium text-sm">Remote</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-3xl font-bold text-slate-700">Direct</div>
+                <div className="text-slate-500 font-medium text-sm">Contact</div>
+              </div>
+            </div>
           </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-slate-700">100%</div>
-            <div className="text-slate-500 font-medium">Remote</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-slate-700">Direct</div>
-            <div className="text-slate-500 font-medium">Contact</div>
+
+          {/* Right: Illustration */}
+          <div className="hidden lg:block">
+            <Image 
+              src="/hero-illustration.svg" 
+              alt="Connecting experienced professionals with companies" 
+              width={600} 
+              height={450}
+              className="w-full h-auto"
+              priority
+            />
           </div>
         </div>
       </div>
