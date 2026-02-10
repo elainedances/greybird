@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
     // Send welcome email to the user
     const { error } = await resend.emails.send({
-      from: "Greybird <onboarding@resend.dev>",
+      from: "Greybird <hello@greybird.pro>",
       to: email,
       subject: "Welcome to Greybird! 🐦",
       html: `
