@@ -31,6 +31,16 @@
 - [x] Account deletion
 - [x] Dynamic navigation (auth-aware)
 
+### Messaging
+- [x] In-app real-time messaging (Supabase Realtime)
+- [x] Conversation list with unread indicators
+- [x] "Message this Expert/Company" buttons on profiles
+- [x] Email notifications for new messages (Resend)
+- [x] Unread badge in navigation
+- [x] Mobile responsive chat UI
+- [x] RLS policies for message security
+- [x] Database migration (conversations, messages, participants)
+
 ### Content & SEO
 - [x] Blog with markdown posts
 - [x] About page

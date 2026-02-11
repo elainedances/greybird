@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import { ContactForm } from "./contact-form";
+import MessageButton from "@/components/MessageButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -133,6 +134,7 @@ export default async function ExpertProfilePage({ params }: Props) {
 
             {/* Contact Buttons */}
             <div className="flex flex-wrap gap-3">
+              <MessageButton targetUserId={profile.id} label="Message this Expert" />
               {profile.linkedin_url && (
                 <a
                   href={profile.linkedin_url}

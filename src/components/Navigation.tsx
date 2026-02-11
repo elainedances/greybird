@@ -4,30 +4,47 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
+import { MessageSquare } from "lucide-react";
 
 type NavigationProps = {
   transparent?: boolean;
 };
 
 export default function Navigation({ transparent = false }: NavigationProps) {
-  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [user, setUser] = useState<{ email: string; id: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
   const supabase = createClient();
 
   useEffect(() => {
     async function checkAuth() {
       const { data: { user } } = await supabase.auth.getUser();
-      setUser(user ? { email: user.email || "" } : null);
+      setUser(user ? { email: user.email || "", id: user.id } : null);
       setLoading(false);
     }
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ? { email: session.user.email || "" } : null);
+      setUser(session?.user ? { email: session.user.email || "", id: session.user.id } : null);
     });
 
     return () => subscription.unsubscribe();
   }, [supabase.auth]);
+
+  useEffect(() => {
+    if (!user) return;
+    async function fetchUnread() {
+      const { count } = await supabase
+        .from("messages")
+        .select("*", { count: "exact", head: true })
+        .neq("sender_id", user!.id)
+        .is("read_at", null);
+      setUnreadCount(count || 0);
+    }
+    fetchUnread();
+    const interval = setInterval(fetchUnread, 30000);
+    return () => clearInterval(interval);
+  }, [user, supabase]);
 
   const bgClass = transparent 
     ? "bg-white/80 backdrop-blur-md" 
@@ -60,6 +77,15 @@ export default function Navigation({ transparent = false }: NavigationProps) {
             <div className="w-20 h-8" /> // Placeholder to prevent layout shift
           ) : user ? (
             <>
+              <Link href="/messages" className="relative text-slate-600 hover:text-teal-700 transition-colors font-medium flex items-center gap-1">
+                <MessageSquare className="w-4 h-4" />
+                Messages
+                {unreadCount > 0 && (
+                  <span className="absolute -top-2 -right-3 w-5 h-5 bg-amber-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                    {unreadCount > 9 ? "9+" : unreadCount}
+                  </span>
+                )}
+              </Link>
               <Link href="/dashboard" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
                 Dashboard
               </Link>

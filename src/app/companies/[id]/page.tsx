@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Navigation from "@/components/Navigation";
+import MessageButton from "@/components/MessageButton";
 
 type Company = {
   id: string;
@@ -213,6 +214,11 @@ export default function CompanyPage() {
                     LinkedIn
                   </a>
                 )}
+              </div>
+
+              {/* Message Button */}
+              <div className="mb-4">
+                <MessageButton targetUserId={company.id} label="Message this Company" />
               </div>
 
               {/* Contact Button */}
