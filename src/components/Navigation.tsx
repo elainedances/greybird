@@ -39,18 +39,18 @@ export default function Navigation({ transparent = false }: NavigationProps) {
         <Link href="/" className="flex items-center gap-3">
           <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
           <span className="text-2xl font-bold text-slate-800">
-            Grey<span className="text-slate-600">bird</span>
+            Grey<span className="text-teal-700">bird</span>
           </span>
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/experts" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          <Link href="/experts" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             Find Experts
           </Link>
-          <Link href="/companies" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          <Link href="/companies" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             Browse Companies
           </Link>
-          <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          <Link href="/about" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             About
           </Link>
         </div>
@@ -60,19 +60,19 @@ export default function Navigation({ transparent = false }: NavigationProps) {
             <div className="w-20 h-8" /> // Placeholder to prevent layout shift
           ) : user ? (
             <>
-              <Link href="/dashboard" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+              <Link href="/dashboard" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
                 Dashboard
               </Link>
-              <Link href="/dashboard" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
+              <Link href="/dashboard" className="bg-teal-700 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200">
                 My Account
               </Link>
             </>
           ) : (
             <>
-              <Link href="/login" className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
+              <Link href="/login" className="hidden sm:block text-slate-600 hover:text-teal-700 transition-colors font-medium">
                 Log In
               </Link>
-              <Link href="/signup" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
+              <Link href="/signup" className="bg-teal-700 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200">
                 Get Started
               </Link>
             </>

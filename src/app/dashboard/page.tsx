@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { LogoutButton } from "./logout-button";
+import { UserCircle, Building2, Search, Eye, EyeOff, Settings, ChevronRight } from "lucide-react";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -31,7 +32,7 @@ export default async function DashboardPage() {
           <Link href="/" className="flex items-center gap-3">
             <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
             <span className="text-xl font-bold text-slate-800">
-              Grey<span className="text-slate-600">bird</span>
+              Grey<span className="text-teal-700">bird</span>
             </span>
           </Link>
           <div className="flex items-center gap-4">
@@ -45,7 +46,7 @@ export default async function DashboardPage() {
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            {profile?.full_name ? `Welcome back, ${profile.full_name.split(" ")[0]}!` : "Welcome to Greybird!"} 🐦
+            {profile?.full_name ? `Welcome back, ${profile.full_name.split(" ")[0]}!` : "Welcome to Greybird!"}
           </h1>
           <p className="text-slate-600">
             You&apos;re signed in as {userType === "expert" ? "an expert" : "a company"}.
@@ -61,14 +62,14 @@ export default async function DashboardPage() {
                 description={isProfileComplete 
                   ? "Update your experience, skills, and availability."
                   : "Add your experience, skills, and availability to get discovered by companies."}
-                icon="👤"
+                iconNode={<UserCircle className="w-7 h-7 text-teal-600" />}
                 href="/profile/edit"
                 cta="Edit Profile"
               />
               <DashboardCard
                 title="Browse Opportunities"
                 description="See companies looking for experienced professionals like you."
-                icon="🔍"
+                iconNode={<Search className="w-7 h-7 text-slate-400" />}
                 href="#"
                 cta="Coming Soon"
                 disabled
@@ -78,7 +79,7 @@ export default async function DashboardPage() {
                 description={isPublic 
                   ? "Your profile is visible to companies. They can find and contact you."
                   : "Your profile is hidden. Make it public to get discovered."}
-                icon={isPublic ? "✅" : "👁️"}
+                iconNode={isPublic ? <Eye className="w-7 h-7 text-emerald-600" /> : <EyeOff className="w-7 h-7 text-amber-500" />}
                 href="/profile/edit"
                 cta={isPublic ? "Manage Visibility" : "Make Visible"}
               />
@@ -88,21 +89,21 @@ export default async function DashboardPage() {
               <DashboardCard
                 title="Company Profile"
                 description="Set up your company profile to attract the best talent."
-                icon="🏢"
+                iconNode={<Building2 className="w-7 h-7 text-teal-600" />}
                 href="/company/edit"
                 cta="Edit Profile"
               />
               <DashboardCard
                 title="Browse Experts"
                 description="Find experienced professionals for your project or advisory needs."
-                icon="🔍"
+                iconNode={<Search className="w-7 h-7 text-teal-600" />}
                 href="/experts"
                 cta="Browse Experts"
               />
               <DashboardCard
                 title="Your Visibility"
                 description="Make your company visible so experts can find and apply to you."
-                icon="👁️"
+                iconNode={<Eye className="w-7 h-7 text-amber-500" />}
                 href="/company/edit"
                 cta="Manage Visibility"
               />
@@ -114,12 +115,9 @@ export default async function DashboardPage() {
         <div className="mt-12 flex flex-wrap gap-4">
           <Link
             href="/settings"
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-teal-700 transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
+            <Settings className="w-5 h-5" />
             Account Settings
           </Link>
         </div>
@@ -149,30 +147,26 @@ export default async function DashboardPage() {
 function DashboardCard({
   title,
   description,
-  icon,
+  iconNode,
   href,
   cta,
   disabled = false,
 }: {
   title: string;
   description: string;
-  icon: string;
+  iconNode: React.ReactNode;
   href: string;
   cta: string;
   disabled?: boolean;
 }) {
   const content = (
-    <div className={`bg-white rounded-xl border border-slate-200 p-6 h-full flex flex-col ${disabled ? "opacity-60" : "hover:border-slate-300 hover:shadow-md transition-all"}`}>
-      <div className="text-3xl mb-4">{icon}</div>
+    <div className={`bg-white rounded-xl border border-slate-200 p-6 h-full flex flex-col ${disabled ? "opacity-60" : "hover:border-teal-200 hover:shadow-lg hover:shadow-teal-50 hover:-translate-y-0.5 transition-all duration-300"}`}>
+      <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center mb-4">{iconNode}</div>
       <h3 className="text-lg font-semibold text-slate-900 mb-2">{title}</h3>
       <p className="text-slate-600 text-sm mb-4 flex-grow">{description}</p>
-      <span className={`inline-flex items-center gap-2 text-sm font-medium ${disabled ? "text-slate-400" : "text-slate-800"}`}>
+      <span className={`inline-flex items-center gap-2 text-sm font-medium ${disabled ? "text-slate-400" : "text-teal-700"}`}>
         {cta}
-        {!disabled && (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        )}
+        {!disabled && <ChevronRight className="w-4 h-4" />}
       </span>
     </div>
   );

@@ -2,50 +2,59 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import {
+  Monitor,
+  BarChart3,
+  Target,
+  Megaphone,
+  Users,
+  Scale,
+  Wrench,
+  Sparkles,
+  Clock,
+  Globe,
+  MessageCircle,
+  DollarSign,
+  Building2,
+  UserCircle,
+  ArrowRight,
+  Rocket,
+  Search,
+  CheckCircle2,
+  ChevronRight,
+} from "lucide-react";
 
-// Logo Component
-function Logo({ className = "", size = 40 }: { className?: string; size?: number }) {
-  return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <Image 
-        src="/logo.png" 
-        alt="Greybird" 
-        width={size} 
-        height={size}
-        className="object-contain"
-      />
-      <span className="text-2xl font-bold text-slate-800">
-        Grey<span className="text-slate-600">bird</span>
-      </span>
-    </div>
-  );
-}
-
-// Navigation
+// Navigation (uses shared component pattern but inline for landing)
 function Navigation() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Logo />
+        <Link href="/" className="flex items-center gap-3">
+          <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
+          <span className="text-2xl font-bold text-slate-800">
+            Grey<span className="text-teal-700">bird</span>
+          </span>
+        </Link>
         <div className="hidden md:flex items-center gap-8">
-          <a href="/experts" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          <Link href="/experts" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             Find Experts
-          </a>
-          <a href="/companies" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          </Link>
+          <Link href="/companies" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             Browse Companies
-          </a>
-          <a href="/about" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          </Link>
+          <Link href="/about" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             About
-          </a>
+          </Link>
         </div>
         <div className="flex items-center gap-4">
-          <a href="/login" className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors font-medium">
+          <Link href="/login" className="hidden sm:block text-slate-600 hover:text-teal-700 transition-colors font-medium">
             Log In
-          </a>
-          <a href="/signup" className="bg-slate-800 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-900 transition-colors">
+          </Link>
+          <Link href="/signup" className="bg-teal-700 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200">
             Get Started
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
@@ -55,15 +64,18 @@ function Navigation() {
 // Hero Section
 function Hero() {
   return (
-    <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-teal-50/30 overflow-hidden relative">
+      {/* Subtle background decoration */}
+      <div className="absolute top-20 right-0 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-amber-100/20 rounded-full blur-3xl" />
+      
+      <div className="max-w-6xl mx-auto relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text Content */}
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 bg-teal-50 text-teal-700 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-teal-100">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-600"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-600"></span>
               </span>
               Now accepting early signups
             </div>
@@ -81,43 +93,38 @@ function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
               <a href="#join" className="btn-primary flex items-center justify-center gap-2">
                 <span>I&apos;m Hiring Talent</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <ArrowRight className="w-5 h-5" />
               </a>
               <a href="#join" className="btn-secondary flex items-center justify-center gap-2">
                 <span>I&apos;m an Expert</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+                <UserCircle className="w-5 h-5" />
               </a>
             </div>
 
             {/* Stats */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-8">
               <div className="text-center lg:text-left">
-                <div className="text-3xl font-bold text-slate-700">20+</div>
+                <div className="text-3xl font-bold text-teal-700">20+</div>
                 <div className="text-slate-500 font-medium text-sm">Years Avg. Experience</div>
               </div>
               <div className="text-center lg:text-left">
-                <div className="text-3xl font-bold text-slate-700">100%</div>
+                <div className="text-3xl font-bold text-teal-700">100%</div>
                 <div className="text-slate-500 font-medium text-sm">Remote</div>
               </div>
               <div className="text-center lg:text-left">
-                <div className="text-3xl font-bold text-slate-700">Direct</div>
+                <div className="text-3xl font-bold text-teal-700">Direct</div>
                 <div className="text-slate-500 font-medium text-sm">Contact</div>
               </div>
             </div>
           </div>
 
-          {/* Right: Hero Image */}
           <div className="hidden lg:block">
             <Image 
               src="/hero-image.webp" 
               alt="Connecting talent to opportunity" 
               width={600} 
               height={600}
-              className="w-full h-auto rounded-2xl"
+              className="w-full h-auto rounded-2xl shadow-2xl shadow-slate-300/40"
               priority
             />
           </div>
@@ -130,14 +137,14 @@ function Hero() {
 // Categories Section
 function Categories() {
   const categories = [
-    { name: "Tech & IT", icon: "💻", count: "Coming soon" },
-    { name: "Finance", icon: "📊", count: "Coming soon" },
-    { name: "Strategy", icon: "🎯", count: "Coming soon" },
-    { name: "Marketing", icon: "📢", count: "Coming soon" },
-    { name: "HR & Recruiting", icon: "👥", count: "Coming soon" },
-    { name: "Legal", icon: "⚖️", count: "Coming soon" },
-    { name: "Engineering", icon: "🔧", count: "Coming soon" },
-    { name: "Other", icon: "✨", count: "Coming soon" },
+    { name: "Tech & IT", icon: Monitor },
+    { name: "Finance", icon: BarChart3 },
+    { name: "Strategy", icon: Target },
+    { name: "Marketing", icon: Megaphone },
+    { name: "HR & Recruiting", icon: Users },
+    { name: "Legal", icon: Scale },
+    { name: "Engineering", icon: Wrench },
+    { name: "Other", icon: Sparkles },
   ];
 
   return (
@@ -156,11 +163,13 @@ function Categories() {
           {categories.map((cat) => (
             <div
               key={cat.name}
-              className="category-pill flex flex-col items-center py-6"
+              className="category-pill flex flex-col items-center py-6 group"
             >
-              <span className="text-3xl mb-2 category-icon">{cat.icon}</span>
+              <div className="w-12 h-12 rounded-xl bg-slate-100 group-hover:bg-teal-50 flex items-center justify-center mb-3 transition-colors duration-300">
+                <cat.icon className="w-6 h-6 text-slate-400 group-hover:text-teal-600 transition-colors duration-300" />
+              </div>
               <span className="font-semibold text-slate-800">{cat.name}</span>
-              <span className="text-sm text-slate-400 mt-1">{cat.count}</span>
+              <span className="text-sm text-slate-400 mt-1">Coming soon</span>
             </div>
           ))}
         </div>
@@ -173,45 +182,40 @@ function Categories() {
 function ValueProps() {
   const props = [
     {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
+      icon: Clock,
       title: "Decades of Experience",
       description: "Access professionals with 20-40 years of real-world expertise. No juniors, no guesswork.",
+      color: "teal",
     },
     {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
+      icon: Globe,
       title: "Global & Remote",
       description: "Work with experts from anywhere in the world. Timezone-flexible, location-independent.",
+      color: "blue",
     },
     {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      ),
+      icon: MessageCircle,
       title: "Direct Contact",
       description: "No middlemen, no agencies. Connect directly with experts and start conversations immediately.",
+      color: "amber",
     },
     {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
+      icon: DollarSign,
       title: "Flexible Engagement",
       description: "Advisory calls, part-time projects, or ongoing collaboration. You decide the format.",
+      color: "emerald",
     },
   ];
 
+  const colorMap: Record<string, { bg: string; icon: string; hover: string }> = {
+    teal: { bg: "bg-teal-50", icon: "text-teal-600", hover: "group-hover:bg-teal-100" },
+    blue: { bg: "bg-blue-50", icon: "text-blue-600", hover: "group-hover:bg-blue-100" },
+    amber: { bg: "bg-amber-50", icon: "text-amber-600", hover: "group-hover:bg-amber-100" },
+    emerald: { bg: "bg-emerald-50", icon: "text-emerald-600", hover: "group-hover:bg-emerald-100" },
+  };
+
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-slate-50 to-slate-100">
+    <section className="py-20 px-6 bg-gradient-to-br from-slate-50 to-teal-50/20">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -223,17 +227,20 @@ function ValueProps() {
         </div>
         
         <div className="grid md:grid-cols-2 gap-8">
-          {props.map((prop) => (
-            <div key={prop.title} className="card flex gap-6">
-              <div className="flex-shrink-0 w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600">
-                {prop.icon}
+          {props.map((prop) => {
+            const colors = colorMap[prop.color];
+            return (
+              <div key={prop.title} className="card flex gap-6 group">
+                <div className={`flex-shrink-0 w-14 h-14 ${colors.bg} ${colors.hover} rounded-xl flex items-center justify-center transition-colors duration-300`}>
+                  <prop.icon className={`w-7 h-7 ${colors.icon}`} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{prop.title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{prop.description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{prop.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{prop.description}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -256,28 +263,34 @@ function HowItWorks() {
         
         <div className="grid md:grid-cols-2 gap-12">
           {/* For Companies */}
-          <div className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl p-8 text-white">
+          <div className="bg-gradient-to-br from-teal-700 to-teal-800 rounded-3xl p-8 text-white shadow-xl shadow-teal-200/30">
             <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              🏢 For Companies
+              <Building2 className="w-4 h-4" /> For Companies
             </div>
             <h3 className="text-2xl font-bold mb-8">Find the right expert, fast</h3>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">
+                  <Search className="w-5 h-5" />
+                </div>
                 <div>
                   <div className="font-semibold mb-1">Browse Profiles</div>
                   <div className="text-white/80">Search by industry, expertise, or availability</div>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">
+                  <MessageCircle className="w-5 h-5" />
+                </div>
                 <div>
                   <div className="font-semibold mb-1">Contact Directly</div>
                   <div className="text-white/80">Reach out to experts with one click</div>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
                 <div>
                   <div className="font-semibold mb-1">Engage On Your Terms</div>
                   <div className="text-white/80">Advisory call, project, or ongoing — you decide</div>
@@ -287,28 +300,34 @@ function HowItWorks() {
           </div>
 
           {/* For Experts */}
-          <div className="bg-slate-900 rounded-3xl p-8 text-white">
+          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 text-white shadow-xl shadow-slate-300/30">
             <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              👤 For Experts
+              <UserCircle className="w-4 h-4" /> For Experts
             </div>
             <h3 className="text-2xl font-bold mb-8">Share your experience, flexibly</h3>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">1</div>
+                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">
+                  <UserCircle className="w-5 h-5" />
+                </div>
                 <div>
                   <div className="font-semibold mb-1">Create Profile (5 min)</div>
                   <div className="text-white/70">Highlight your experience and expertise</div>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">2</div>
+                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">
+                  <Clock className="w-5 h-5" />
+                </div>
                 <div>
                   <div className="font-semibold mb-1">Set Availability</div>
                   <div className="text-white/70">Define how many hours and what type of work</div>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">3</div>
+                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">
+                  <Rocket className="w-5 h-5" />
+                </div>
                 <div>
                   <div className="font-semibold mb-1">Get Contacted</div>
                   <div className="text-white/70">Companies reach out for opportunities</div>
@@ -321,30 +340,6 @@ function HowItWorks() {
     </section>
   );
 }
-
-// Testimonial Section (Ready to add when we have real quotes)
-// Usage: Add <Testimonials /> between <HowItWorks /> and <Waitlist />
-// 
-// function Testimonials() {
-//   const testimonials = [
-//     { quote: "Quote here", author: "Name", role: "Title, Company" },
-//   ];
-//   return (
-//     <section className="py-20 px-6 bg-slate-50">
-//       <div className="max-w-4xl mx-auto text-center">
-//         <svg className="w-12 h-12 text-slate-300 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
-//           <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-//         </svg>
-//         <blockquote className="text-2xl md:text-3xl font-medium text-slate-700 mb-8 leading-relaxed">
-//           &ldquo;{testimonials[0].quote}&rdquo;
-//         </blockquote>
-//         <div className="text-slate-500">
-//           — {testimonials[0].author}, {testimonials[0].role}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
 
 // Waitlist Section
 function Waitlist() {
@@ -366,14 +361,12 @@ function Waitlist() {
       
       if (error) {
         if (error.code === '23505') {
-          // Duplicate email
           alert('This email is already on the waitlist!');
         } else {
           console.error('Error:', error);
           alert('Something went wrong. Please try again.');
         }
       } else {
-        // Send welcome email
         try {
           await fetch('/api/waitlist', {
             method: 'POST',
@@ -381,7 +374,6 @@ function Waitlist() {
             body: JSON.stringify({ email, type }),
           });
         } catch (emailErr) {
-          // Don't block signup if email fails
           console.error('Email error:', emailErr);
         }
         setSubmitted(true);
@@ -395,25 +387,25 @@ function Waitlist() {
   };
 
   return (
-    <section id="join" className="py-20 px-6 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900">
+    <section id="join" className="py-20 px-6 bg-gradient-to-br from-teal-700 via-teal-800 to-slate-900">
       <div className="max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
-          <span className="category-icon">🚀</span> Be First In Line
+          <Rocket className="w-4 h-4" /> Be First In Line
         </div>
         
         <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
           Join the Waitlist
         </h2>
         
-        <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto">
+        <p className="text-xl text-teal-100 mb-10 max-w-xl mx-auto">
           Get early access when we launch. We&apos;ll notify you as soon as Greybird goes live.
         </p>
         
         {submitted ? (
           <div className="bg-white/20 backdrop-blur rounded-2xl p-8 max-w-md mx-auto">
-            <div className="text-5xl mb-4">🎉</div>
+            <CheckCircle2 className="w-12 h-12 text-amber-400 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-white mb-2">You&apos;re on the list!</h3>
-            <p className="text-slate-300">We&apos;ll be in touch soon.</p>
+            <p className="text-teal-100">We&apos;ll be in touch soon.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -429,7 +421,7 @@ function Waitlist() {
             </div>
             
             <div className="flex gap-4 mb-6 justify-center">
-              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "company" ? "bg-white border-slate-300" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
+              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "company" ? "bg-white border-white" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
                 <input
                   type="radio"
                   name="type"
@@ -438,9 +430,10 @@ function Waitlist() {
                   onChange={() => setType("company")}
                   className="sr-only"
                 />
-                <span className={type === "company" ? "text-slate-800" : ""}>🏢 I&apos;m hiring</span>
+                <Building2 className={`w-4 h-4 ${type === "company" ? "text-teal-700" : ""}`} />
+                <span className={type === "company" ? "text-teal-800 font-medium" : ""}>I&apos;m hiring</span>
               </label>
-              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "expert" ? "bg-white border-slate-300" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
+              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "expert" ? "bg-white border-white" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
                 <input
                   type="radio"
                   name="type"
@@ -449,14 +442,15 @@ function Waitlist() {
                   onChange={() => setType("expert")}
                   className="sr-only"
                 />
-                <span className={type === "expert" ? "text-slate-800" : ""}>👤 I&apos;m an expert</span>
+                <UserCircle className={`w-4 h-4 ${type === "expert" ? "text-teal-700" : ""}`} />
+                <span className={type === "expert" ? "text-teal-800 font-medium" : ""}>I&apos;m an expert</span>
               </label>
             </div>
             
             <button
               type="submit"
               disabled={loading || !email || !type}
-              className="w-full bg-white text-slate-800 px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-amber-600 transition-all hover:shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Joining..." : "Join Waitlist →"}
             </button>
@@ -482,14 +476,14 @@ function Footer() {
               className="object-contain brightness-0 invert opacity-80"
             />
             <span className="text-xl font-bold text-white">
-              Grey<span className="text-slate-400">bird</span>
+              Grey<span className="text-teal-400">bird</span>
             </span>
           </div>
           <div className="flex gap-6 text-sm">
-            <a href="/about" className="hover:text-white transition-colors">About</a>
-            <a href="/blog" className="hover:text-white transition-colors">Blog</a>
-            <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
-            <a href="/terms" className="hover:text-white transition-colors">Terms</a>
+            <Link href="/about" className="hover:text-white transition-colors">About</Link>
+            <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
           </div>
           <div className="text-sm">
             © 2026 Greybird. All rights reserved.

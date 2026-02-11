@@ -114,7 +114,7 @@ export default async function ExpertsPage({ searchParams }: { searchParams: Sear
             {/* Submit */}
             <button
               type="submit"
-              className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition-colors"
+              className="px-6 py-3 bg-teal-700 text-white rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200"
             >
               Search
             </button>
@@ -172,7 +172,9 @@ export default async function ExpertsPage({ searchParams }: { searchParams: Sear
           </div>
         ) : (
           <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
-            <div className="text-4xl mb-4">🔍</div>
+            <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+            </div>
             <h2 className="text-xl font-semibold text-slate-900 mb-2">No experts found</h2>
             <p className="text-slate-600 mb-6">Try adjusting your filters or search terms.</p>
             <Link 
@@ -201,7 +203,7 @@ function ExpertCard({ expert }: { expert: {
 }}) {
   return (
     <Link href={`/experts/${expert.id}`}>
-      <div className="bg-white rounded-xl border border-slate-200 p-6 hover:border-slate-300 hover:shadow-md transition-all h-full">
+      <div className="bg-white rounded-xl border border-slate-200 p-6 hover:border-teal-200 hover:shadow-lg hover:shadow-teal-50 hover:-translate-y-0.5 transition-all duration-300 h-full">
         {/* Avatar & Name */}
         <div className="flex items-start gap-4 mb-4">
           <div className="w-14 h-14 rounded-full bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400 flex-shrink-0">

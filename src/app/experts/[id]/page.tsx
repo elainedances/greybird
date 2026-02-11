@@ -53,7 +53,7 @@ export default async function ExpertProfilePage({ params }: Props) {
           <Link href="/" className="flex items-center gap-3">
             <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
             <span className="text-xl font-bold text-slate-800">
-              Grey<span className="text-slate-600">bird</span>
+              Grey<span className="text-teal-700">bird</span>
             </span>
           </Link>
           <Link 
@@ -70,7 +70,7 @@ export default async function ExpertProfilePage({ params }: Props) {
         {/* Hero Section */}
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           {/* Banner */}
-          <div className="h-32 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900" />
+          <div className="h-32 bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900" />
           
           {/* Profile Header */}
           <div className="px-8 pb-8">
@@ -205,7 +205,7 @@ export default async function ExpertProfilePage({ params }: Props) {
                 {profile.skills.map((skill: string) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 bg-slate-800 text-white rounded-full text-sm"
+                    className="px-3 py-1 bg-teal-700 text-white rounded-full text-sm"
                   >
                     {skill}
                   </span>

@@ -360,7 +360,7 @@ export default function EditProfilePage() {
                   onClick={() => toggleCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     (profile.categories || []).includes(category)
-                      ? "bg-slate-800 text-white"
+                      ? "bg-teal-700 text-white"
                       : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                   }`}
                 >
@@ -388,7 +388,7 @@ export default function EditProfilePage() {
                 <button
                   type="button"
                   onClick={addSkill}
-                  className="px-4 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition-colors"
+                  className="px-4 py-3 bg-teal-700 text-white rounded-lg font-medium hover:bg-teal-800 transition-colors"
                 >
                   Add
                 </button>
@@ -508,7 +508,7 @@ export default function EditProfilePage() {
             <button
               type="submit"
               disabled={saving}
-              className="px-8 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition-colors disabled:opacity-50"
+              className="px-8 py-3 bg-teal-700 text-white rounded-lg font-medium hover:bg-teal-800 transition-colors disabled:opacity-50"
             >
               {saving ? "Saving..." : "Save Profile"}
             </button>

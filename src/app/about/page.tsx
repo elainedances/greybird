@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import { UserCircle, Building2, Handshake, Target, Zap, Gem } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us | Greybird",
@@ -14,7 +15,7 @@ export default function AboutPage() {
       <Navigation transparent />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
             We Believe Experience<br />Should Never Be Wasted
@@ -48,8 +49,8 @@ export default function AboutPage() {
             <div className="bg-slate-100 rounded-2xl p-8">
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                    👤
+                  <div className="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <UserCircle className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">For Professionals</div>
@@ -57,8 +58,8 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                    🏢
+                  <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">For Companies</div>
@@ -66,8 +67,8 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-xl flex-shrink-0">
-                    🤝
+                  <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Handshake className="w-5 h-5 text-amber-600" />
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">Direct Connection</div>
@@ -81,7 +82,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Mission */}
-      <section className="py-20 px-6 bg-slate-900 text-white">
+      <section className="py-20 px-6 bg-gradient-to-br from-teal-800 to-slate-900 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Our Mission
@@ -100,8 +101,8 @@ export default function AboutPage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
-                🎯
+              <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Target className="w-8 h-8 text-teal-600" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Direct Access</h3>
               <p className="text-slate-600">
@@ -109,8 +110,8 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
-                ⚡
+              <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-8 h-8 text-amber-600" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Flexibility First</h3>
               <p className="text-slate-600">
@@ -118,8 +119,8 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
-                💎
+              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Gem className="w-8 h-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Experience Matters</h3>
               <p className="text-slate-600">
@@ -155,7 +156,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900">
+      <section className="py-20 px-6 bg-gradient-to-br from-teal-700 via-teal-800 to-slate-900">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Join Us?
@@ -185,7 +186,7 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="Greybird" width={32} height={32} className="object-contain brightness-0 invert opacity-80" />
-            <span className="text-xl font-bold text-white">Grey<span className="text-slate-400">bird</span></span>
+            <span className="text-xl font-bold text-white">Grey<span className="text-teal-400">bird</span></span>
           </div>
           <div className="flex gap-6 text-sm">
             <Link href="/about" className="hover:text-white transition-colors">About</Link>

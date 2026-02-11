@@ -86,7 +86,7 @@ export default async function CompaniesPage({
             </select>
             <button
               type="submit"
-              className="px-6 py-3 bg-slate-800 text-white rounded-xl font-medium hover:bg-slate-900 transition-colors"
+              className="px-6 py-3 bg-teal-700 text-white rounded-xl font-medium hover:bg-teal-800 transition-colors"
             >
               Search
             </button>
@@ -165,7 +165,7 @@ export default async function CompaniesPage({
                       {company.looking_for.slice(0, 3).map((cat: string) => (
                         <span
                           key={cat}
-                          className="text-xs bg-slate-800 text-white px-2 py-1 rounded-full"
+                          className="text-xs bg-teal-700 text-white px-2 py-1 rounded-full"
                         >
                           {cat}
                         </span>
@@ -189,7 +189,7 @@ export default async function CompaniesPage({
               </p>
               <Link
                 href="/signup"
-                className="inline-block bg-slate-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-900 transition-colors"
+                className="inline-block bg-teal-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-800 transition-colors"
               >
                 Create Company Profile
               </Link>
@@ -203,7 +203,7 @@ export default async function CompaniesPage({
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="Greybird" width={32} height={32} className="object-contain brightness-0 invert opacity-80" />
-            <span className="text-xl font-bold text-white">Grey<span className="text-slate-400">bird</span></span>
+            <span className="text-xl font-bold text-white">Grey<span className="text-teal-400">bird</span></span>
           </div>
           <div className="flex gap-6 text-sm">
             <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>

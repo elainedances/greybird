@@ -271,7 +271,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading || !captchaToken}
-              className="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-slate-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-teal-700 text-white py-3 rounded-xl font-medium hover:bg-teal-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating account..." : "Create account"}
             </button>

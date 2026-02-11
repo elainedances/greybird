@@ -113,7 +113,7 @@ export default function CompanyPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
             {/* Header */}
-            <div className="bg-gradient-to-br from-slate-700 to-slate-800 px-8 py-10 text-white">
+            <div className="bg-gradient-to-br from-teal-700 to-teal-800 px-8 py-10 text-white">
               <div className="flex items-start gap-6">
                 <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0">
                   {company.logo_url ? (
@@ -219,7 +219,7 @@ export default function CompanyPage() {
               {company.contact_email && !showContact && !sent && (
                 <button
                   onClick={() => setShowContact(true)}
-                  className="w-full bg-slate-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-900 transition-colors"
+                  className="w-full bg-teal-700 text-white py-4 rounded-xl font-bold text-lg hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200"
                 >
                   Contact This Company
                 </button>
@@ -267,7 +267,7 @@ export default function CompanyPage() {
                       <button
                         type="submit"
                         disabled={sending}
-                        className="flex-grow bg-slate-800 text-white py-3 rounded-lg font-medium hover:bg-slate-900 transition-colors disabled:opacity-50"
+                        className="flex-grow bg-slate-800 text-white py-3 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200 disabled:opacity-50"
                       >
                         {sending ? "Sending..." : "Send Message"}
                       </button>
@@ -296,7 +296,7 @@ export default function CompanyPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="Greybird" width={32} height={32} className="object-contain brightness-0 invert opacity-80" />
-            <span className="text-xl font-bold text-white">Grey<span className="text-slate-400">bird</span></span>
+            <span className="text-xl font-bold text-white">Grey<span className="text-teal-400">bird</span></span>
           </div>
           <div className="flex gap-6 text-sm">
             <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>

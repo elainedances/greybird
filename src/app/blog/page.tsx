@@ -77,7 +77,7 @@ export default function BlogPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-6 bg-slate-800">
+      <section className="py-16 px-6 bg-gradient-to-br from-teal-700 to-slate-800">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             Ready to Get Started?
@@ -96,7 +96,7 @@ export default function BlogPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="Greybird" width={32} height={32} className="object-contain brightness-0 invert opacity-80" />
-            <span className="text-xl font-bold text-white">Grey<span className="text-slate-400">bird</span></span>
+            <span className="text-xl font-bold text-white">Grey<span className="text-teal-400">bird</span></span>
           </div>
           <div className="flex gap-6 text-sm">
             <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
