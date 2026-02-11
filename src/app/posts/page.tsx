@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SortDropdown from "@/components/SortDropdown";
 import { timeAgo } from "@/lib/timeAgo";
 
 export const metadata: Metadata = {
@@ -47,7 +48,9 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
     query = query.contains("categories", [category]);
   }
 
-  if (sort === "rate_low") {
+  if (sort === "oldest") {
+    query = query.order("created_at", { ascending: true });
+  } else if (sort === "rate_low") {
     query = query.order("hourly_rate_min", { ascending: true, nullsFirst: false });
   } else if (sort === "rate_high") {
     query = query.order("hourly_rate_max", { ascending: false, nullsFirst: false });
@@ -180,34 +183,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
           <p className="text-sm text-slate-500">
             {filteredPosts.length} post{filteredPosts.length !== 1 ? "s" : ""} found
           </p>
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-slate-400">Sort:</span>
-            {[
-              { value: "newest", label: "Newest" },
-              { value: "rate_low", label: "Rate ↑" },
-              { value: "rate_high", label: "Rate ↓" },
-            ].map((s) => {
-              const p = new URLSearchParams();
-              if (search) p.set("search", search);
-              if (type) p.set("type", type);
-              if (category) p.set("category", category);
-              if (s.value !== "newest") p.set("sort", s.value);
-              const href = `/posts${p.toString() ? `?${p.toString()}` : ""}`;
-              return (
-                <Link
-                  key={s.value}
-                  href={href}
-                  className={`px-3 py-1 rounded-full transition-colors ${
-                    sort === s.value
-                      ? "bg-teal-700 text-white"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  }`}
-                >
-                  {s.label}
-                </Link>
-              );
-            })}
-          </div>
+          <SortDropdown sort={sort} search={search} type={type} category={category} />
         </div>
 
         {filteredPosts.length > 0 ? (
