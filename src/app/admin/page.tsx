@@ -14,7 +14,7 @@ export default async function AdminPage() {
 
   // Fetch all data in parallel
   const [profilesRes, postsRes, waitlistRes] = await Promise.all([
-    supabase.from("profiles").select("id, full_name, headline, location, avatar_url, is_public, created_at"),
+    supabase.from("profiles").select("id, full_name, headline, location, avatar_url, is_public, contact_email, created_at"),
     supabase.from("posts").select("id, user_id, post_type, title, description, category, is_active, created_at"),
     supabase.from("waitlist").select("id, email, created_at").order("created_at", { ascending: false }),
   ]);

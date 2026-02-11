@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Users, FileText, Mail, TrendingUp, Search, Download, Eye, EyeOff, Trash2, ToggleLeft, ToggleRight } from "lucide-react";
+import { Users, FileText, Mail, TrendingUp, Search, Download, Trash2, ToggleLeft, ToggleRight } from "lucide-react";
 
 interface Stats {
   totalUsers: number;
@@ -19,6 +19,7 @@ interface Profile {
   location: string | null;
   avatar_url: string | null;
   is_public: boolean;
+  contact_email: string | null;
   created_at: string;
   post_count: number;
 }
@@ -90,16 +91,7 @@ export default function AdminClient({
     return res.json();
   }
 
-  async function toggleVisibility(id: string, current: boolean) {
-    setLoading(id);
-    try {
-      await apiCall("toggle_visibility", { id, is_public: !current });
-      setProfiles(prev => prev.map(p => p.id === id ? { ...p, is_public: !current } : p));
-    } catch (e) {
-      alert(e instanceof Error ? e.message : "Error");
-    }
-    setLoading(null);
-  }
+  // toggleVisibility removed — visibility is per-post now
 
   async function togglePostActive(id: string, current: boolean) {
     setLoading(id);
@@ -195,8 +187,7 @@ export default function AdminClient({
                     <th className="text-left px-4 py-3 font-medium">Location</th>
                     <th className="text-left px-4 py-3 font-medium">Signed Up</th>
                     <th className="text-center px-4 py-3 font-medium">Posts</th>
-                    <th className="text-center px-4 py-3 font-medium">Visibility</th>
-                    <th className="text-center px-4 py-3 font-medium">Action</th>
+                    <th className="text-center px-4 py-3 font-medium">Email</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -209,22 +200,7 @@ export default function AdminClient({
                       <td className="px-4 py-3 text-slate-600">{p.location || "—"}</td>
                       <td className="px-4 py-3 text-slate-600">{new Date(p.created_at).toLocaleDateString()}</td>
                       <td className="px-4 py-3 text-center text-slate-600">{p.post_count}</td>
-                      <td className="px-4 py-3 text-center">
-                        {p.is_public ? (
-                          <span className="inline-flex items-center gap-1 text-xs text-green-700 bg-green-50 px-2 py-0.5 rounded-full"><Eye className="w-3 h-3" />Public</span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full"><EyeOff className="w-3 h-3" />Hidden</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        <button
-                          onClick={() => toggleVisibility(p.id, p.is_public)}
-                          disabled={loading === p.id}
-                          className="text-xs text-teal-700 hover:text-teal-900 font-medium disabled:opacity-50"
-                        >
-                          {p.is_public ? "Hide" : "Show"}
-                        </button>
-                      </td>
+                      <td className="px-4 py-3 text-center text-slate-600 text-xs">{p.contact_email || "—"}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import MessageButton from "@/components/MessageButton";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Building2, Users } from "lucide-react";
+import { Building2, Users, Mail } from "lucide-react";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -119,6 +119,15 @@ export default async function UserProfilePage({ params }: Props) {
             {/* Contact */}
             <div className="flex flex-wrap gap-3">
               <MessageButton targetUserId={profile.id} label="Message" />
+              {profile.contact_email && (
+                <a
+                  href={`mailto:${profile.contact_email}`}
+                  className="inline-flex items-center gap-2 border border-teal-300 text-teal-700 px-6 py-3 rounded-lg font-medium hover:bg-teal-50 transition-colors"
+                >
+                  <Mail className="w-4 h-4" />
+                  Email
+                </a>
+              )}
               {profile.linkedin_url && (
                 <a
                   href={profile.linkedin_url}

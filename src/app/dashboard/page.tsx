@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
-import { UserCircle, PlusCircle, Eye, EyeOff, Settings, ChevronRight, FileText } from "lucide-react";
+import { UserCircle, PlusCircle, Eye, Settings, ChevronRight, FileText } from "lucide-react";
 import Footer from "@/components/Footer";
 
 export default async function DashboardPage() {
@@ -65,13 +65,11 @@ export default async function DashboardPage() {
             cta="New Post"
           />
           <DashboardCard
-            title="Your Visibility"
-            description={isPublic
-              ? "Your profile is public. People can find and contact you."
-              : "Your profile is hidden. Make it public to get discovered."}
-            iconNode={isPublic ? <Eye className="w-7 h-7 text-emerald-600" /> : <EyeOff className="w-7 h-7 text-amber-500" />}
-            href="/profile/edit"
-            cta={isPublic ? "Manage Visibility" : "Make Visible"}
+            title="Browse Posts"
+            description="Discover what others are offering or looking for."
+            iconNode={<Eye className="w-7 h-7 text-teal-600" />}
+            href="/posts"
+            cta="Browse Posts"
           />
         </div>
 
