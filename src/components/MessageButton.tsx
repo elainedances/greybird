@@ -37,7 +37,7 @@ export default function MessageButton({ targetUserId, label }: { targetUserId: s
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Failed to start conversation");
+        setError(`${data.error}: ${data.details || "unknown"}`);
         setLoading(false);
         return;
       }
