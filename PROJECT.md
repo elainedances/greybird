@@ -59,6 +59,21 @@
 - [ ] In-app messaging (real-time chat)
 - [ ] Admin dashboard (user management, analytics)
 
+### Visual Design (2026-02-11)
+- [x] Lucide icons (replaced all emojis)
+- [x] Teal/amber color palette
+- [x] Plus Jakarta Sans font
+- [x] Card shadows + hover lift effects
+- [x] Hero image with teal tones
+
+### Next Priority
+- [ ] In-app messaging (Supabase Realtime)
+  - conversations + messages tables
+  - /messages page with chat UI
+  - "Message" button on profiles
+  - Unread badge in nav
+  - Email notification when offline
+
 ### Nice to Have
 - [ ] Dark mode toggle
 - [ ] Animations (Framer Motion)
@@ -116,4 +131,4 @@
 
 ---
 
-*Last updated: 2026-02-10*
+*Last updated: 2026-02-11*
