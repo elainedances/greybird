@@ -320,13 +320,13 @@ function HowItWorks() {
 // Waitlist Section
 function Waitlist() {
   const [email, setEmail] = useState("");
-  const [type, setType] = useState<"company" | "expert" | "">("");
+  const [type] = useState("general");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !type) return;
+    if (!email) return;
     
     setLoading(true);
     
@@ -396,36 +396,9 @@ function Waitlist() {
               />
             </div>
             
-            <div className="flex gap-4 mb-6 justify-center">
-              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "company" ? "bg-white border-white" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
-                <input
-                  type="radio"
-                  name="type"
-                  value="company"
-                  checked={type === "company"}
-                  onChange={() => setType("company")}
-                  className="sr-only"
-                />
-                <Building2 className={`w-4 h-4 ${type === "company" ? "text-teal-700" : ""}`} />
-                <span className={type === "company" ? "text-teal-800 font-medium" : ""}>I&apos;m hiring</span>
-              </label>
-              <label className={`flex items-center gap-2 cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${type === "expert" ? "bg-white border-white" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}`}>
-                <input
-                  type="radio"
-                  name="type"
-                  value="expert"
-                  checked={type === "expert"}
-                  onChange={() => setType("expert")}
-                  className="sr-only"
-                />
-                <UserCircle className={`w-4 h-4 ${type === "expert" ? "text-teal-700" : ""}`} />
-                <span className={type === "expert" ? "text-teal-800 font-medium" : ""}>I&apos;m an expert</span>
-              </label>
-            </div>
-            
             <button
               type="submit"
-              disabled={loading || !email || !type}
+              disabled={loading || !email}
               className="w-full bg-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-amber-600 transition-all hover:shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Joining..." : "Join Waitlist →"}
