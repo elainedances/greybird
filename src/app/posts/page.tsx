@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { timeAgo } from "@/lib/timeAgo";
 
 export const metadata: Metadata = {
   title: "Browse Posts — Greybird",
@@ -28,6 +30,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
   const type = typeof params.type === "string" ? params.type : undefined;
   const category = typeof params.category === "string" ? params.category : undefined;
   const search = typeof params.search === "string" ? params.search : undefined;
+  const sort = typeof params.sort === "string" ? params.sort : "newest";
 
   const supabase = await createClient();
 
@@ -44,7 +47,15 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
     query = query.contains("categories", [category]);
   }
 
-  const { data: posts, error: postsError } = await query.order("created_at", { ascending: false });
+  if (sort === "rate_low") {
+    query = query.order("hourly_rate_min", { ascending: true, nullsFirst: false });
+  } else if (sort === "rate_high") {
+    query = query.order("hourly_rate_max", { ascending: false, nullsFirst: false });
+  } else {
+    query = query.order("created_at", { ascending: false });
+  }
+
+  const { data: posts, error: postsError } = await query;
 
   // Fetch profiles for post authors
   const userIds = [...new Set((posts || []).map((p) => p.user_id))];
@@ -165,9 +176,39 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
           )}
         </div>
 
-        <p className="text-sm text-slate-500 mb-4">
-          {filteredPosts.length} post{filteredPosts.length !== 1 ? "s" : ""} found
-        </p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm text-slate-500">
+            {filteredPosts.length} post{filteredPosts.length !== 1 ? "s" : ""} found
+          </p>
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-slate-400">Sort:</span>
+            {[
+              { value: "newest", label: "Newest" },
+              { value: "rate_low", label: "Rate ↑" },
+              { value: "rate_high", label: "Rate ↓" },
+            ].map((s) => {
+              const p = new URLSearchParams();
+              if (search) p.set("search", search);
+              if (type) p.set("type", type);
+              if (category) p.set("category", category);
+              if (s.value !== "newest") p.set("sort", s.value);
+              const href = `/posts${p.toString() ? `?${p.toString()}` : ""}`;
+              return (
+                <Link
+                  key={s.value}
+                  href={href}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    sort === s.value
+                      ? "bg-teal-700 text-white"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {s.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
 
         {filteredPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -191,6 +232,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
           </div>
         )}
       </main>
+      <Footer />
     </div>
   );
 }
@@ -231,12 +273,15 @@ function PostCard({ post }: { post: {
           </span>
         </div>
 
-        {/* Author */}
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-sm font-bold text-slate-400 flex-shrink-0">
-            {profile?.full_name?.charAt(0) || "?"}
+        {/* Author + Date */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-sm font-bold text-slate-400 flex-shrink-0">
+              {profile?.full_name?.charAt(0) || "?"}
+            </div>
+            <span className="text-sm text-slate-600 truncate">{profile?.full_name || "Anonymous"}</span>
           </div>
-          <span className="text-sm text-slate-600 truncate">{profile?.full_name || "Anonymous"}</span>
+          <span className="text-xs text-slate-400 flex-shrink-0">{timeAgo(post.created_at)}</span>
         </div>
 
         {/* Title */}

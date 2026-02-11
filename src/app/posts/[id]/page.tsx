@@ -6,6 +6,7 @@ import MessageButton from "@/components/MessageButton";
 import EmailContactButton from "@/components/EmailContactButton";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { timeAgo } from "@/lib/timeAgo";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -76,8 +77,8 @@ export default async function PostDetailPage({ params }: Props) {
           <div className={`h-24 ${post.post_type === "offering" ? "bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900" : "bg-gradient-to-r from-amber-600 via-amber-700 to-slate-900"}`} />
 
           <div className="px-8 pb-8 -mt-4">
-            {/* Type Badge */}
-            <div className="mb-6">
+            {/* Type Badge + Date */}
+            <div className="mb-6 flex items-center gap-3">
               <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium shadow-sm ${
                 post.post_type === "offering"
                   ? "bg-teal-100 text-teal-800"
@@ -85,6 +86,7 @@ export default async function PostDetailPage({ params }: Props) {
               }`}>
                 {post.post_type === "offering" ? "Offering Expertise" : "Looking for Talent"}
               </span>
+              <span className="text-sm text-slate-400">Posted {timeAgo(post.created_at)}</span>
             </div>
 
             {/* Title */}
