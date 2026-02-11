@@ -1,9 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Metadata } from "next";
 import MessageButton from "@/components/MessageButton";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -64,25 +65,9 @@ export default async function PostDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-100">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
-            <span className="text-xl font-bold text-slate-800">
-              Grey<span className="text-teal-700">bird</span>
-            </span>
-          </Link>
-          <Link
-            href="/posts"
-            className="text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            ← Browse Posts
-          </Link>
-        </div>
-      </header>
+      <Navigation />
 
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 pt-24 pb-12">
         {/* Post Card */}
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           {/* Banner */}
@@ -239,15 +224,7 @@ export default async function PostDetailPage({ params }: Props) {
         </div>
       </main>
 
-      <footer className="mt-12 py-8 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 text-center text-slate-500 text-sm">
-          <Link href="/" className="hover:text-slate-700">Greybird</Link>
-          {" · "}
-          <Link href="/posts" className="hover:text-slate-700">Browse Posts</Link>
-          {" · "}
-          <Link href="/signup" className="hover:text-slate-700">Join Greybird</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

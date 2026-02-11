@@ -1,9 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Metadata } from "next";
 import MessageButton from "@/components/MessageButton";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { Building2, Users } from "lucide-react";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -55,25 +57,9 @@ export default async function UserProfilePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-100">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
-            <span className="text-xl font-bold text-slate-800">
-              Grey<span className="text-teal-700">bird</span>
-            </span>
-          </Link>
-          <Link
-            href="/posts"
-            className="text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            ← Browse Posts
-          </Link>
-        </div>
-      </header>
+      <Navigation />
 
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 pt-24 pb-12">
         {/* Profile Card */}
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           <div className="h-32 bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900" />
@@ -105,7 +91,7 @@ export default async function UserProfilePage({ params }: Props) {
             {profile.company_name && (
               <div className="flex flex-wrap gap-4 mb-6">
                 <div className="bg-slate-100 px-4 py-2 rounded-lg">
-                  <span className="font-semibold text-slate-900">🏢 {profile.company_name}</span>
+                  <span className="font-semibold text-slate-900 flex items-center gap-1"><Building2 className="w-4 h-4" /> {profile.company_name}</span>
                 </div>
                 {profile.industry && (
                   <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm text-slate-600">
@@ -114,7 +100,7 @@ export default async function UserProfilePage({ params }: Props) {
                 )}
                 {profile.company_size && (
                   <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm text-slate-600">
-                    👥 {profile.company_size} employees
+                    <span className="flex items-center gap-1"><Users className="w-4 h-4" /> {profile.company_size} employees</span>
                   </div>
                 )}
               </div>
@@ -233,15 +219,7 @@ export default async function UserProfilePage({ params }: Props) {
         )}
       </main>
 
-      <footer className="mt-12 py-8 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 text-center text-slate-500 text-sm">
-          <Link href="/" className="hover:text-slate-700">Greybird</Link>
-          {" · "}
-          <Link href="/posts" className="hover:text-slate-700">Browse Posts</Link>
-          {" · "}
-          <Link href="/signup" className="hover:text-slate-700">Join Greybird</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

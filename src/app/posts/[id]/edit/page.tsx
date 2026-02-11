@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Navigation from "@/components/Navigation";
+import { Lightbulb, Search } from "lucide-react";
 
 const CATEGORIES = [
   "Tech & IT",
@@ -172,7 +173,7 @@ export default function EditPostPage() {
                     : "border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <div className="text-2xl mb-1">💡</div>
+                <div className="text-2xl mb-1"><Lightbulb className="w-6 h-6 text-teal-700" /></div>
                 <div className="font-semibold text-slate-900">Offering Expertise</div>
                 <div className="text-sm text-slate-500">I&apos;m available for projects or advisory</div>
               </button>
@@ -185,7 +186,7 @@ export default function EditPostPage() {
                     : "border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <div className="text-2xl mb-1">🔍</div>
+                <div className="text-2xl mb-1"><Search className="w-6 h-6 text-amber-600" /></div>
                 <div className="font-semibold text-slate-900">Looking for Talent</div>
                 <div className="text-sm text-slate-500">I need experienced professionals</div>
               </button>

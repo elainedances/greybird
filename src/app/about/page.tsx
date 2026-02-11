@@ -172,10 +172,10 @@ export default function AboutPage() {
               Create Your Profile
             </Link>
             <Link
-              href="/experts"
+              href="/posts"
               className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors"
             >
-              Browse Experts
+              Browse Posts
             </Link>
           </div>
         </div>

@@ -121,8 +121,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 Join Greybird and connect with senior professionals for advisory, projects, or flexible work.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/experts" className="bg-white text-slate-800 px-6 py-3 rounded-lg font-medium border border-slate-200 hover:bg-slate-100 transition-colors">
-                  Browse Experts
+                <Link href="/posts" className="bg-white text-slate-800 px-6 py-3 rounded-lg font-medium border border-slate-200 hover:bg-slate-100 transition-colors">
+                  Browse Posts
                 </Link>
                 <Link href="/signup" className="bg-slate-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-900 transition-colors">
                   Create Account

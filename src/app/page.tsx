@@ -60,7 +60,7 @@ function Hero() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
               <Link href="/posts" className="btn-primary flex items-center justify-center gap-2">
-                <span>Browse Opportunities</span>
+                <span>Browse Posts</span>
                 <Search className="w-5 h-5" />
               </Link>
               <Link href="/signup" className="btn-secondary flex items-center justify-center gap-2">
@@ -123,7 +123,7 @@ function Categories() {
             Find Expertise In Every Field
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Browse senior professionals across industries, ready for advisory calls, projects, or part-time collaboration.
+            Browse posts from senior professionals across industries, ready for advisory calls, projects, or part-time collaboration.
           </p>
         </div>
         
@@ -242,7 +242,7 @@ function HowItWorks() {
                   <Search className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-semibold mb-1">Browse Profiles</div>
+                  <div className="font-semibold mb-1">Browse Posts</div>
                   <div className="text-white/80">Search by industry, expertise, or availability</div>
                 </div>
               </div>
