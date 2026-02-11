@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
-import { UserCircle, Building2, Search, Eye, EyeOff, Settings, ChevronRight } from "lucide-react";
+import { UserCircle, PlusCircle, Eye, EyeOff, Settings, ChevronRight, FileText } from "lucide-react";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -19,80 +19,115 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single();
 
-  const userType = profile?.user_type || user.user_metadata?.user_type || "expert";
   const isProfileComplete = profile?.full_name && profile?.headline;
   const isPublic = profile?.is_public || false;
+
+  // Fetch user's posts
+  const { data: posts } = await supabase
+    .from("posts")
+    .select("id, post_type, title, is_active, created_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  const activePosts = posts?.filter((p) => p.is_active) || [];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
 
-      {/* Main */}
       <main className="max-w-6xl mx-auto px-6 pt-24 pb-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
             {profile?.full_name ? `Welcome back, ${profile.full_name.split(" ")[0]}!` : "Welcome to Greybird!"}
           </h1>
           <p className="text-slate-600">
-            You&apos;re signed in as {userType === "expert" ? "an expert" : "a company"}.
+            Manage your profile and posts.
           </p>
         </div>
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {userType === "expert" ? (
-            <>
-              <DashboardCard
-                title={isProfileComplete ? "Edit Your Profile" : "Complete Your Profile"}
-                description={isProfileComplete 
-                  ? "Update your experience, skills, and availability."
-                  : "Add your experience, skills, and availability to get discovered by companies."}
-                iconNode={<UserCircle className="w-7 h-7 text-teal-600" />}
-                href="/profile/edit"
-                cta="Edit Profile"
-              />
-              <DashboardCard
-                title="Browse Opportunities"
-                description="See companies looking for experienced professionals like you."
-                iconNode={<Search className="w-7 h-7 text-slate-400" />}
-                href="#"
-                cta="Coming Soon"
-                disabled
-              />
-              <DashboardCard
-                title="Your Visibility"
-                description={isPublic 
-                  ? "Your profile is visible to companies. They can find and contact you."
-                  : "Your profile is hidden. Make it public to get discovered."}
-                iconNode={isPublic ? <Eye className="w-7 h-7 text-emerald-600" /> : <EyeOff className="w-7 h-7 text-amber-500" />}
-                href="/profile/edit"
-                cta={isPublic ? "Manage Visibility" : "Make Visible"}
-              />
-            </>
+          <DashboardCard
+            title={isProfileComplete ? "Edit Your Profile" : "Complete Your Profile"}
+            description={isProfileComplete
+              ? "Update your information, skills, and contact details."
+              : "Add your information to get started on Greybird."}
+            iconNode={<UserCircle className="w-7 h-7 text-teal-600" />}
+            href="/profile/edit"
+            cta="Edit Profile"
+          />
+          <DashboardCard
+            title="Create a Post"
+            description="Share what you're offering or what you're looking for."
+            iconNode={<PlusCircle className="w-7 h-7 text-teal-600" />}
+            href="/posts/new"
+            cta="New Post"
+          />
+          <DashboardCard
+            title="Your Visibility"
+            description={isPublic
+              ? "Your profile is public. People can find and contact you."
+              : "Your profile is hidden. Make it public to get discovered."}
+            iconNode={isPublic ? <Eye className="w-7 h-7 text-emerald-600" /> : <EyeOff className="w-7 h-7 text-amber-500" />}
+            href="/profile/edit"
+            cta={isPublic ? "Manage Visibility" : "Make Visible"}
+          />
+        </div>
+
+        {/* Your Posts */}
+        <div className="mt-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold text-slate-900">Your Posts</h2>
+            <Link
+              href="/posts/new"
+              className="text-sm text-teal-700 hover:text-teal-800 font-medium flex items-center gap-1"
+            >
+              <PlusCircle className="w-4 h-4" />
+              New Post
+            </Link>
+          </div>
+
+          {posts && posts.length > 0 ? (
+            <div className="space-y-3">
+              {posts.map((post) => (
+                <Link key={post.id} href={`/posts/${post.id}/edit`}>
+                  <div className="bg-white rounded-xl border border-slate-200 p-5 flex items-center justify-between hover:border-teal-200 hover:shadow-sm transition-all">
+                    <div className="flex items-center gap-4">
+                      <FileText className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-medium text-slate-900">{post.title}</h3>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+                            post.post_type === "offering"
+                              ? "bg-teal-100 text-teal-800"
+                              : "bg-amber-100 text-amber-800"
+                          }`}>
+                            {post.post_type === "offering" ? "Offering" : "Seeking"}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-500">
+                          {post.is_active ? "Active" : "Hidden"} · Created {new Date(post.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                  </div>
+                </Link>
+              ))}
+            </div>
           ) : (
-            <>
-              <DashboardCard
-                title="Company Profile"
-                description="Set up your company profile to attract the best talent."
-                iconNode={<Building2 className="w-7 h-7 text-teal-600" />}
-                href="/company/edit"
-                cta="Edit Profile"
-              />
-              <DashboardCard
-                title="Browse Experts"
-                description="Find experienced professionals for your project or advisory needs."
-                iconNode={<Search className="w-7 h-7 text-teal-600" />}
-                href="/experts"
-                cta="Browse Experts"
-              />
-              <DashboardCard
-                title="Your Visibility"
-                description="Make your company visible so experts can find and apply to you."
-                iconNode={<Eye className="w-7 h-7 text-amber-500" />}
-                href="/company/edit"
-                cta="Manage Visibility"
-              />
-            </>
+            <div className="bg-white rounded-xl border border-slate-200 p-8 text-center">
+              <FileText className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+              <h3 className="font-medium text-slate-900 mb-1">No posts yet</h3>
+              <p className="text-slate-600 text-sm mb-4">Create your first post to start connecting.</p>
+              <Link
+                href="/posts/new"
+                className="inline-flex items-center gap-2 bg-teal-700 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-teal-800 transition-colors"
+              >
+                <PlusCircle className="w-4 h-4" />
+                Create Post
+              </Link>
+            </div>
           )}
         </div>
 
@@ -112,15 +147,15 @@ export default async function DashboardPage() {
           <h2 className="text-lg font-semibold text-slate-900 mb-4">Account Status</h2>
           <div className="grid md:grid-cols-3 gap-4">
             <StatusItem label="Email" value={user.email || "Not set"} status="verified" />
-            <StatusItem 
-              label="Profile" 
-              value={isProfileComplete ? "Complete" : "Incomplete"} 
-              status={isProfileComplete ? "verified" : "pending"} 
+            <StatusItem
+              label="Profile"
+              value={isProfileComplete ? "Complete" : "Incomplete"}
+              status={isProfileComplete ? "verified" : "pending"}
             />
-            <StatusItem 
-              label="Visibility" 
-              value={isPublic ? "Public" : "Hidden"} 
-              status={isPublic ? "verified" : "pending"} 
+            <StatusItem
+              label="Active Posts"
+              value={`${activePosts.length}`}
+              status={activePosts.length > 0 ? "verified" : "pending"}
             />
           </div>
         </div>

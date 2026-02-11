@@ -22,7 +22,6 @@ declare global {
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState<"expert" | "company">("expert");
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +58,7 @@ export default function SignupPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?user_type=${userType}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
@@ -84,9 +83,6 @@ export default function SignupPage() {
       email,
       password,
       options: {
-        data: {
-          user_type: userType,
-        },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
         captchaToken,
       },
@@ -145,39 +141,6 @@ export default function SignupPage() {
               {error}
             </div>
           )}
-
-          {/* User Type Selection */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-3">I am...</label>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setUserType("expert")}
-                className={`p-4 rounded-xl border-2 text-left transition-all ${
-                  userType === "expert"
-                    ? "border-slate-800 bg-slate-50"
-                    : "border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <div className="text-2xl mb-1">👤</div>
-                <div className="font-semibold text-slate-900">An Expert</div>
-                <div className="text-sm text-slate-500">Looking for opportunities</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => setUserType("company")}
-                className={`p-4 rounded-xl border-2 text-left transition-all ${
-                  userType === "company"
-                    ? "border-slate-800 bg-slate-50"
-                    : "border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <div className="text-2xl mb-1">🏢</div>
-                <div className="font-semibold text-slate-900">A Company</div>
-                <div className="text-sm text-slate-500">Looking for talent</div>
-              </button>
-            </div>
-          </div>
 
           {/* Social Login Buttons */}
           <div className="space-y-3 mb-6">

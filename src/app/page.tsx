@@ -59,14 +59,14 @@ function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <a href="#join" className="btn-primary flex items-center justify-center gap-2">
-                <span>I&apos;m Hiring Talent</span>
+              <Link href="/posts" className="btn-primary flex items-center justify-center gap-2">
+                <span>Browse Opportunities</span>
+                <Search className="w-5 h-5" />
+              </Link>
+              <Link href="/signup" className="btn-secondary flex items-center justify-center gap-2">
+                <span>Create a Post</span>
                 <ArrowRight className="w-5 h-5" />
-              </a>
-              <a href="#join" className="btn-secondary flex items-center justify-center gap-2">
-                <span>I&apos;m an Expert</span>
-                <UserCircle className="w-5 h-5" />
-              </a>
+              </Link>
             </div>
 
             {/* Stats */}

@@ -21,13 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/experts`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/companies`,
+      url: `${baseUrl}/posts`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,

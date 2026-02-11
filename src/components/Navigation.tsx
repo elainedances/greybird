@@ -61,12 +61,14 @@ export default function Navigation({ transparent = false }: NavigationProps) {
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/experts" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
-            Find Experts
+          <Link href="/posts" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
+            Browse Posts
           </Link>
-          <Link href="/companies" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
-            Browse Companies
-          </Link>
+          {user && (
+            <Link href="/posts/new" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
+              Create Post
+            </Link>
+          )}
           <Link href="/about" className="text-slate-600 hover:text-teal-700 transition-colors font-medium">
             About
           </Link>

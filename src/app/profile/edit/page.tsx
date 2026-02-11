@@ -20,24 +20,43 @@ const CATEGORIES = [
   "Other",
 ];
 
+const INDUSTRIES = [
+  "Technology",
+  "Finance",
+  "Healthcare",
+  "Manufacturing",
+  "Consulting",
+  "Retail",
+  "Energy",
+  "Other",
+];
+
+const COMPANY_SIZES = [
+  { value: "1-10", label: "1-10 employees" },
+  { value: "11-50", label: "11-50 employees" },
+  { value: "51-200", label: "51-200 employees" },
+  { value: "201-500", label: "201-500 employees" },
+  { value: "500+", label: "500+ employees" },
+];
+
 type Profile = {
   id: string;
-  user_type: string;
   full_name: string | null;
   headline: string | null;
   bio: string | null;
   location: string | null;
   avatar_url: string | null;
   years_experience: number | null;
-  hourly_rate_min: number | null;
-  hourly_rate_max: number | null;
-  availability: string | null;
   categories: string[] | null;
   skills: string[] | null;
   contact_email: string | null;
   linkedin_url: string | null;
   website_url: string | null;
   preferred_contact: string | null;
+  company_name: string | null;
+  company_headline: string | null;
+  industry: string | null;
+  company_size: string | null;
   is_public: boolean;
 };
 
@@ -54,7 +73,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     async function loadProfile() {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         router.push("/login");
         return;
@@ -68,29 +87,47 @@ export default function EditProfilePage() {
 
       if (error) {
         console.error("Error loading profile:", error);
-        // Profile might not exist yet, create default
         setProfile({
           id: user.id,
-          user_type: user.user_metadata?.user_type || "expert",
           full_name: null,
           headline: null,
           bio: null,
           location: null,
           avatar_url: null,
           years_experience: null,
-          hourly_rate_min: null,
-          hourly_rate_max: null,
-          availability: null,
           categories: [],
           skills: [],
           contact_email: user.email || null,
           linkedin_url: null,
           website_url: null,
           preferred_contact: "email",
+          company_name: null,
+          company_headline: null,
+          industry: null,
+          company_size: null,
           is_public: false,
         });
       } else {
-        setProfile(data);
+        setProfile({
+          id: data.id,
+          full_name: data.full_name,
+          headline: data.headline,
+          bio: data.bio,
+          location: data.location,
+          avatar_url: data.avatar_url,
+          years_experience: data.years_experience,
+          categories: data.categories,
+          skills: data.skills,
+          contact_email: data.contact_email,
+          linkedin_url: data.linkedin_url,
+          website_url: data.website_url,
+          preferred_contact: data.preferred_contact,
+          company_name: data.company_name,
+          company_headline: data.company_headline,
+          industry: data.industry,
+          company_size: data.company_size,
+          is_public: data.is_public,
+        });
       }
       setLoading(false);
     }
@@ -117,7 +154,6 @@ export default function EditProfilePage() {
       setError(error.message);
       setSaving(false);
     } else {
-      // Redirect to dashboard after successful save
       router.push("/dashboard");
     }
   };
@@ -163,18 +199,15 @@ export default function EditProfilePage() {
     return null;
   }
 
-  const isExpert = profile.user_type === "expert";
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
 
-      {/* Main */}
       <main className="max-w-4xl mx-auto px-6 pt-24 pb-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Edit Your Profile</h1>
           <p className="text-slate-600">
-            Complete your profile to {isExpert ? "get discovered by companies" : "attract top talent"}.
+            Complete your profile to get discovered and connect with others.
           </p>
         </div>
 
@@ -207,7 +240,7 @@ export default function EditProfilePage() {
           {/* Basic Info */}
           <section className="bg-white rounded-xl border border-slate-200 p-6">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Basic Information</h2>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -244,7 +277,7 @@ export default function EditProfilePage() {
                   type="text"
                   value={profile.headline || ""}
                   onChange={(e) => updateProfile("headline", e.target.value)}
-                  placeholder={isExpert ? "Former CFO | 25+ Years in Finance | Board Advisor" : "Growing tech company seeking experienced advisors"}
+                  placeholder="Former CFO | 25+ Years in Finance | Board Advisor"
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
                   required
                 />
@@ -257,88 +290,91 @@ export default function EditProfilePage() {
                 <textarea
                   value={profile.bio || ""}
                   onChange={(e) => updateProfile("bio", e.target.value)}
-                  placeholder={isExpert ? "Tell companies about your experience, expertise, and what you're looking for..." : "Describe your company and what kind of expertise you're seeking..."}
+                  placeholder="Tell people about your experience, expertise, and what you're looking for..."
                   rows={4}
                   maxLength={500}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none resize-none"
                 />
                 <p className="text-xs text-slate-500 mt-1">{(profile.bio || "").length}/500 characters</p>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Years of Experience
+                </label>
+                <select
+                  value={profile.years_experience || ""}
+                  onChange={(e) => updateProfile("years_experience", e.target.value ? parseInt(e.target.value) : null)}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+                >
+                  <option value="">Select...</option>
+                  <option value="15">15-20 years</option>
+                  <option value="20">20-25 years</option>
+                  <option value="25">25-30 years</option>
+                  <option value="30">30+ years</option>
+                </select>
+              </div>
             </div>
           </section>
 
-          {/* Expert-specific fields */}
-          {isExpert && (
-            <section className="bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="text-lg font-semibold text-slate-900 mb-6">Experience & Availability</h2>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Years of Experience
-                  </label>
-                  <select
-                    value={profile.years_experience || ""}
-                    onChange={(e) => updateProfile("years_experience", e.target.value ? parseInt(e.target.value) : null)}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
-                  >
-                    <option value="">Select...</option>
-                    <option value="15">15-20 years</option>
-                    <option value="20">20-25 years</option>
-                    <option value="25">25-30 years</option>
-                    <option value="30">30+ years</option>
-                  </select>
-                </div>
+          {/* Company Info (Optional) */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-2">Company Information</h2>
+            <p className="text-sm text-slate-600 mb-6">Optional — fill in if you represent a company</p>
 
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Availability
-                  </label>
-                  <select
-                    value={profile.availability || ""}
-                    onChange={(e) => updateProfile("availability", e.target.value || null)}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
-                  >
-                    <option value="">Select...</option>
-                    <option value="available">Available for new projects</option>
-                    <option value="limited">Limited availability</option>
-                    <option value="unavailable">Not available currently</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Hourly Rate (USD)
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      value={profile.hourly_rate_min || ""}
-                      onChange={(e) => updateProfile("hourly_rate_min", e.target.value ? parseInt(e.target.value) : null)}
-                      placeholder="Min"
-                      className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
-                    />
-                    <span className="text-slate-400">—</span>
-                    <input
-                      type="number"
-                      value={profile.hourly_rate_max || ""}
-                      onChange={(e) => updateProfile("hourly_rate_max", e.target.value ? parseInt(e.target.value) : null)}
-                      placeholder="Max"
-                      className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
-                    />
-                  </div>
-                </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  value={profile.company_name || ""}
+                  onChange={(e) => updateProfile("company_name", e.target.value || null)}
+                  placeholder="Acme Corporation"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+                />
               </div>
-            </section>
-          )}
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Industry
+                </label>
+                <select
+                  value={profile.industry || ""}
+                  onChange={(e) => updateProfile("industry", e.target.value || null)}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+                >
+                  <option value="">Select...</option>
+                  {INDUSTRIES.map((ind) => (
+                    <option key={ind} value={ind}>{ind}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Company Size
+                </label>
+                <select
+                  value={profile.company_size || ""}
+                  onChange={(e) => updateProfile("company_size", e.target.value || null)}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+                >
+                  <option value="">Select...</option>
+                  {COMPANY_SIZES.map((size) => (
+                    <option key={size.value} value={size.value}>{size.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </section>
 
           {/* Categories */}
           <section className="bg-white rounded-xl border border-slate-200 p-6">
             <h2 className="text-lg font-semibold text-slate-900 mb-2">Categories</h2>
-            <p className="text-sm text-slate-600 mb-4">
-              {isExpert ? "Select your areas of expertise" : "Select the expertise you're looking for"}
-            </p>
-            
+            <p className="text-sm text-slate-600 mb-4">Select your areas of expertise or interest</p>
+
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((category) => (
                 <button
@@ -358,53 +394,51 @@ export default function EditProfilePage() {
           </section>
 
           {/* Skills */}
-          {isExpert && (
-            <section className="bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="text-lg font-semibold text-slate-900 mb-2">Skills</h2>
-              <p className="text-sm text-slate-600 mb-4">Add specific skills or tools you excel at</p>
-              
-              <div className="flex gap-2 mb-4">
-                <input
-                  type="text"
-                  value={skillInput}
-                  onChange={(e) => setSkillInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())}
-                  placeholder="e.g., Financial Modeling, M&A, Leadership"
-                  className="flex-grow px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
-                />
-                <button
-                  type="button"
-                  onClick={addSkill}
-                  className="px-4 py-3 bg-teal-700 text-white rounded-lg font-medium hover:bg-teal-800 transition-colors"
-                >
-                  Add
-                </button>
-              </div>
+          <section className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-2">Skills</h2>
+            <p className="text-sm text-slate-600 mb-4">Add specific skills or tools you excel at</p>
 
-              <div className="flex flex-wrap gap-2">
-                {(profile.skills || []).map((skill) => (
-                  <span
-                    key={skill}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm"
+            <div className="flex gap-2 mb-4">
+              <input
+                type="text"
+                value={skillInput}
+                onChange={(e) => setSkillInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())}
+                placeholder="e.g., Financial Modeling, M&A, Leadership"
+                className="flex-grow px-4 py-3 rounded-lg border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none"
+              />
+              <button
+                type="button"
+                onClick={addSkill}
+                className="px-4 py-3 bg-teal-700 text-white rounded-lg font-medium hover:bg-teal-800 transition-colors"
+              >
+                Add
+              </button>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {(profile.skills || []).map((skill) => (
+                <span
+                  key={skill}
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm"
+                >
+                  {skill}
+                  <button
+                    type="button"
+                    onClick={() => removeSkill(skill)}
+                    className="text-slate-400 hover:text-slate-600"
                   >
-                    {skill}
-                    <button
-                      type="button"
-                      onClick={() => removeSkill(skill)}
-                      className="text-slate-400 hover:text-slate-600"
-                    >
-                      ×
-                    </button>
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          </section>
 
           {/* Contact */}
           <section className="bg-white rounded-xl border border-slate-200 p-6">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Contact Information</h2>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -470,9 +504,7 @@ export default function EditProfilePage() {
               <div>
                 <h2 className="text-lg font-semibold text-slate-900 mb-1">Profile Visibility</h2>
                 <p className="text-sm text-slate-600">
-                  {isExpert
-                    ? "Make your profile visible to companies looking for experts"
-                    : "Make your company visible to experts"}
+                  Make your profile visible so others can find and contact you
                 </p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">

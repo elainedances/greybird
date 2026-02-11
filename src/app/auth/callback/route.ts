@@ -19,12 +19,6 @@ export async function GET(request: Request) {
     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
     
     if (!exchangeError) {
-      // Store user_type in metadata for OAuth signups
-      const userType = searchParams.get("user_type");
-      if (userType && (userType === "expert" || userType === "company")) {
-        await supabase.auth.updateUser({ data: { user_type: userType } });
-      }
-      
       // Successful auth - redirect to dashboard or intended destination
       const redirectUrl = next.startsWith("/") ? `${origin}${next}` : next;
       return NextResponse.redirect(redirectUrl);
