@@ -42,94 +42,15 @@ export default function MessagesClient({ currentUserId }: { currentUserId: strin
   };
 
   const loadConversations = useCallback(async () => {
-    // Get all conversations for current user
-    const { data: participations } = await supabase
-      .from("conversation_participants")
-      .select("conversation_id")
-      .eq("user_id", currentUserId);
-
-    if (!participations?.length) {
+    try {
+      const res = await fetch("/api/messages/conversations");
+      const data = await res.json();
+      setConversations(data.conversations || []);
+    } catch {
       setConversations([]);
-      setLoading(false);
-      return;
     }
-
-    const convIds = participations.map((p) => p.conversation_id);
-
-    // Get other participants with their profiles
-    const { data: otherParticipants } = await supabase
-      .from("conversation_participants")
-      .select("conversation_id, user_id")
-      .in("conversation_id", convIds)
-      .neq("user_id", currentUserId);
-
-    if (!otherParticipants?.length) {
-      setConversations([]);
-      setLoading(false);
-      return;
-    }
-
-    const otherUserIds = [...new Set(otherParticipants.map((p) => p.user_id))];
-
-    // Get profiles and company names
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("id, full_name")
-      .in("id", otherUserIds);
-
-    const { data: companies } = await supabase
-      .from("companies")
-      .select("id, company_name")
-      .in("id", otherUserIds);
-
-    const nameMap = new Map<string, string>();
-    profiles?.forEach((p) => nameMap.set(p.id, p.full_name || "Unknown User"));
-    companies?.forEach((c) => {
-      if (c.company_name && !nameMap.has(c.id)) {
-        nameMap.set(c.id, c.company_name);
-      }
-    });
-
-    // Build conversation list with last message
-    const convList: Conversation[] = [];
-    for (const convId of convIds) {
-      const otherP = otherParticipants.find((p) => p.conversation_id === convId);
-      if (!otherP) continue;
-
-      const { data: lastMsg } = await supabase
-        .from("messages")
-        .select("content, created_at")
-        .eq("conversation_id", convId)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .single();
-
-      const { count } = await supabase
-        .from("messages")
-        .select("*", { count: "exact", head: true })
-        .eq("conversation_id", convId)
-        .neq("sender_id", currentUserId)
-        .is("read_at", null);
-
-      convList.push({
-        id: convId,
-        other_user_id: otherP.user_id,
-        other_user_name: nameMap.get(otherP.user_id) || "Unknown User",
-        last_message: lastMsg?.content || null,
-        last_message_at: lastMsg?.created_at || null,
-        unread_count: count || 0,
-      });
-    }
-
-    convList.sort((a, b) => {
-      if (!a.last_message_at) return 1;
-      if (!b.last_message_at) return -1;
-      return new Date(b.last_message_at).getTime() - new Date(a.last_message_at).getTime();
-    });
-
-    setConversations(convList);
     setLoading(false);
-  }, [currentUserId, supabase]);
+  }, []);
 
   const loadMessages = useCallback(async (convId: string) => {
     const { data } = await supabase
