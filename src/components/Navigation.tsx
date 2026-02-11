@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, LogOut } from "lucide-react";
 
 type NavigationProps = {
   transparent?: boolean;
@@ -94,6 +94,16 @@ export default function Navigation({ transparent = false }: NavigationProps) {
               <Link href="/dashboard" className="bg-teal-700 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200">
                 My Account
               </Link>
+              <button
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  window.location.href = "/";
+                }}
+                className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-slate-50"
+                title="Log out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
             </>
           ) : (
             <>
