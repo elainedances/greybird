@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import MessageButton from "@/components/MessageButton";
+import EmailContactButton from "@/components/EmailContactButton";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -49,7 +50,7 @@ export default async function PostDetailPage({ params }: Props) {
   // Fetch profile separately (no FK from posts to profiles)
   const { data: profileData } = await supabase
     .from("profiles")
-    .select("id, full_name, headline, avatar_url, location, linkedin_url, website_url")
+    .select("id, full_name, headline, avatar_url, location, linkedin_url, website_url, contact_email")
     .eq("id", post.user_id)
     .single();
 
@@ -61,6 +62,7 @@ export default async function PostDetailPage({ params }: Props) {
     location: string | null;
     linkedin_url: string | null;
     website_url: string | null;
+    contact_email: string | null;
   } | null;
 
   return (
@@ -155,6 +157,9 @@ export default async function PostDetailPage({ params }: Props) {
             <div className="flex flex-wrap gap-3 mb-8">
               {profile && (
                 <MessageButton targetUserId={profile.id} label="Message" />
+              )}
+              {profile?.contact_email && (
+                <EmailContactButton targetUserId={profile.id} targetName={profile.full_name || "this user"} />
               )}
               {profile?.linkedin_url && (
                 <a
