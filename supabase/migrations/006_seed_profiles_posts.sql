@@ -208,7 +208,17 @@ VALUES
  'Switzerland', 22, ARRAY['Hospitality & Tourism'], ARRAY[]::text[],
  true, 'diane.rousseau@seed.greybird.pro', now() - interval '1 day')
 
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  full_name = EXCLUDED.full_name,
+  headline = EXCLUDED.headline,
+  bio = EXCLUDED.bio,
+  location = EXCLUDED.location,
+  years_experience = EXCLUDED.years_experience,
+  categories = EXCLUDED.categories,
+  skills = EXCLUDED.skills,
+  is_public = EXCLUDED.is_public,
+  contact_email = EXCLUDED.contact_email,
+  created_at = EXCLUDED.created_at;
 
 
 -- ============================================

@@ -7,19 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import Navigation from "@/components/Navigation";
 import { Lightbulb, Search } from "lucide-react";
 import Footer from "@/components/Footer";
-
-const CATEGORIES = [
-  "Tech & IT",
-  "Finance & Accounting",
-  "Marketing & Content",
-  "HR & Recruiting",
-  "Engineering",
-  "Legal & Compliance",
-  "Strategy & Consulting",
-  "Operations",
-  "Sales",
-  "Other",
-];
+import { CATEGORIES } from "@/lib/categories";
 
 export default function NewPostPage() {
   const [loading, setLoading] = useState(true);

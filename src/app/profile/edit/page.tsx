@@ -8,18 +8,7 @@ import Navigation from "@/components/Navigation";
 import AvatarUpload from "@/components/AvatarUpload";
 import Footer from "@/components/Footer";
 
-const CATEGORIES = [
-  "Tech & IT",
-  "Finance & Accounting",
-  "Marketing & Content",
-  "HR & Recruiting",
-  "Engineering",
-  "Legal & Compliance",
-  "Strategy & Consulting",
-  "Operations",
-  "Sales",
-  "Other",
-];
+import { CATEGORIES } from "@/lib/categories";
 
 const INDUSTRIES = [
   "Technology",

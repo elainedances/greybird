@@ -5,24 +5,12 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SortDropdown from "@/components/SortDropdown";
 import { timeAgo } from "@/lib/timeAgo";
+import { CATEGORIES } from "@/lib/categories";
 
 export const metadata: Metadata = {
   title: "Browse Posts — Greybird",
   description: "Find professionals offering expertise or companies looking for talent.",
 };
-
-const CATEGORIES = [
-  "Tech & IT",
-  "Finance & Accounting",
-  "Marketing & Content",
-  "HR & Recruiting",
-  "Engineering",
-  "Legal & Compliance",
-  "Strategy & Consulting",
-  "Operations",
-  "Sales",
-  "Other",
-];
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
