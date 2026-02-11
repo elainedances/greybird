@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -168,6 +169,7 @@ export default function SettingsPage() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

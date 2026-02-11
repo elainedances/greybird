@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Navigation from "@/components/Navigation";
 import { Lightbulb, Search } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const CATEGORIES = [
   "Tech & IT",
@@ -388,6 +389,7 @@ export default function NewPostPage() {
           </div>
         </form>
       </main>
+      <Footer />
     </div>
   );
 }

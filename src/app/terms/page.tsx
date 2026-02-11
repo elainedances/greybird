@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Terms of Service — Greybird",
@@ -120,6 +121,7 @@ export default function TermsOfService() {
           </Link>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Navigation from "@/components/Navigation";
 import AvatarUpload from "@/components/AvatarUpload";
+import Footer from "@/components/Footer";
 
 const CATEGORIES = [
   "Tech & IT",
@@ -534,6 +535,7 @@ export default function EditProfilePage() {
           </div>
         </form>
       </main>
+      <Footer />
     </div>
   );
 }

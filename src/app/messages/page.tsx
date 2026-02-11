@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import MessagesClient from "@/components/MessagesClient";
 import { Metadata } from "next";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Messages — Greybird",
@@ -16,5 +17,10 @@ export default async function MessagesPage() {
     redirect("/login");
   }
 
-  return <MessagesClient currentUserId={user.id} />;
+  return (
+    <>
+      <MessagesClient currentUserId={user.id} />
+      <Footer />
+    </>
+  );
 }

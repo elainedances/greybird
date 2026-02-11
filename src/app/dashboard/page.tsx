@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import { UserCircle, PlusCircle, Eye, EyeOff, Settings, ChevronRight, FileText } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -160,6 +161,7 @@ export default async function DashboardPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
