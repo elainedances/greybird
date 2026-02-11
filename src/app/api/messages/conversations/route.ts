@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -9,8 +10,11 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  // Use admin client to bypass RLS
+  const admin = createAdminClient();
+
   // Get all conversation IDs for this user
-  const { data: myParticipations } = await supabase
+  const { data: myParticipations } = await admin
     .from("conversation_participants")
     .select("conversation_id")
     .eq("user_id", user.id);
@@ -22,7 +26,7 @@ export async function GET() {
   const convIds = myParticipations.map((p) => p.conversation_id);
 
   // Get other participants
-  const { data: otherParticipants } = await supabase
+  const { data: otherParticipants } = await admin
     .from("conversation_participants")
     .select("conversation_id, user_id")
     .in("conversation_id", convIds)
@@ -34,14 +38,14 @@ export async function GET() {
   const nameMap = new Map<string, string>();
   
   if (otherUserIds.length) {
-    const { data: profiles } = await supabase
+    const { data: profiles } = await admin
       .from("profiles")
       .select("id, full_name")
       .in("id", otherUserIds);
     
     profiles?.forEach((p) => nameMap.set(p.id, p.full_name || "Unknown User"));
 
-    const { data: companies } = await supabase
+    const { data: companies } = await admin
       .from("companies")
       .select("id, company_name")
       .in("id", otherUserIds);
@@ -59,7 +63,7 @@ export async function GET() {
     const otherP = (otherParticipants || []).find((p) => p.conversation_id === convId);
     if (!otherP) continue;
 
-    const { data: lastMsg } = await supabase
+    const { data: lastMsg } = await admin
       .from("messages")
       .select("content, created_at")
       .eq("conversation_id", convId)
@@ -67,7 +71,7 @@ export async function GET() {
       .limit(1)
       .single();
 
-    const { count } = await supabase
+    const { count } = await admin
       .from("messages")
       .select("*", { count: "exact", head: true })
       .eq("conversation_id", convId)

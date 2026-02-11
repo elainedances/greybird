@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
@@ -19,8 +20,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
+    const admin = createAdminClient();
+
     // Verify user is in this conversation
-    const { data: participant } = await supabase
+    const { data: participant } = await admin
       .from("conversation_participants")
       .select("user_id")
       .eq("conversation_id", conversation_id)
@@ -32,7 +35,7 @@ export async function POST(request: Request) {
     }
 
     // Insert message
-    const { data: message, error } = await supabase
+    const { data: message, error } = await admin
       .from("messages")
       .insert({
         conversation_id,
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
     }
 
     // Get recipient for email notification
-    const { data: otherParticipant } = await supabase
+    const { data: otherParticipant } = await admin
       .from("conversation_participants")
       .select("user_id")
       .eq("conversation_id", conversation_id)
@@ -57,7 +60,7 @@ export async function POST(request: Request) {
 
     if (otherParticipant) {
       // Check if recipient has unread messages (if so, they might not be online)
-      const { count } = await supabase
+      const { count } = await admin
         .from("messages")
         .select("*", { count: "exact", head: true })
         .eq("conversation_id", conversation_id)
@@ -68,13 +71,13 @@ export async function POST(request: Request) {
       // Send email notification if this is the first unread message
       if (count === 0) {
         // Get recipient email from profiles
-        const { data: recipientProfile } = await supabase
+        const { data: recipientProfile } = await admin
           .from("profiles")
           .select("full_name, contact_email")
           .eq("id", otherParticipant.user_id)
           .single();
 
-        const { data: senderProfile } = await supabase
+        const { data: senderProfile } = await admin
           .from("profiles")
           .select("full_name")
           .eq("id", user.id)
