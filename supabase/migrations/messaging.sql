@@ -36,6 +36,16 @@ ALTER TABLE conversations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE conversation_participants ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 
+-- Conversations: authenticated users can create conversations
+CREATE POLICY "Authenticated users can create conversations"
+  ON conversations FOR INSERT
+  WITH CHECK (auth.uid() IS NOT NULL);
+
+-- Conversation participants: users can add themselves to conversations
+CREATE POLICY "Users can add participants to new conversations"
+  ON conversation_participants FOR INSERT
+  WITH CHECK (auth.uid() IS NOT NULL);
+
 -- Conversations: users can see conversations they participate in
 CREATE POLICY "Users can view their conversations"
   ON conversations FOR SELECT
@@ -47,10 +57,12 @@ CREATE POLICY "Users can view their conversations"
 -- Conversation participants: users can see participants of their conversations
 CREATE POLICY "Users can view participants of their conversations"
   ON conversation_participants FOR SELECT
-  USING (EXISTS (
-    SELECT 1 FROM conversation_participants cp
-    WHERE cp.conversation_id = conversation_participants.conversation_id AND cp.user_id = auth.uid()
-  ));
+  USING (
+    user_id = auth.uid() OR
+    conversation_id IN (
+      SELECT cp.conversation_id FROM conversation_participants cp WHERE cp.user_id = auth.uid()
+    )
+  );
 
 -- Messages: users can view messages in their conversations
 CREATE POLICY "Users can view messages in their conversations"
@@ -94,11 +106,16 @@ CREATE OR REPLACE FUNCTION get_or_create_conversation(other_user_id uuid)
 RETURNS uuid
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public
 AS $$
 DECLARE
   current_user_id uuid := auth.uid();
   conv_id uuid;
 BEGIN
+  IF current_user_id IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated';
+  END IF;
+
   -- Find existing 1-on-1 conversation between these two users
   SELECT cp1.conversation_id INTO conv_id
   FROM conversation_participants cp1

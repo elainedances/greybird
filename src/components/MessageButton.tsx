@@ -7,11 +7,14 @@ import { MessageCircle } from "lucide-react";
 
 export default function MessageButton({ targetUserId, label }: { targetUserId: string; label: string }) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
   const handleClick = async () => {
     setLoading(true);
+    setError(null);
+
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       router.push("/login");
@@ -19,31 +22,44 @@ export default function MessageButton({ targetUserId, label }: { targetUserId: s
     }
 
     if (user.id === targetUserId) {
+      setError("You can't message yourself");
       setLoading(false);
       return;
     }
 
-    const { data, error } = await supabase.rpc("get_or_create_conversation", {
-      other_user_id: targetUserId,
-    });
+    try {
+      const res = await fetch("/api/messages/conversation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ other_user_id: targetUserId }),
+      });
 
-    if (error) {
-      console.error("Error creating conversation:", error);
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Failed to start conversation");
+        setLoading(false);
+        return;
+      }
+
+      router.push(`/messages?conversation=${data.conversation_id}`);
+    } catch {
+      setError("Something went wrong");
       setLoading(false);
-      return;
     }
-
-    router.push(`/messages?conversation=${data}`);
   };
 
   return (
-    <button
-      onClick={handleClick}
-      disabled={loading}
-      className="inline-flex items-center gap-2 bg-teal-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200 disabled:opacity-50"
-    >
-      <MessageCircle className="w-5 h-5" />
-      {loading ? "Loading..." : label}
-    </button>
+    <div>
+      <button
+        onClick={handleClick}
+        disabled={loading}
+        className="inline-flex items-center gap-2 bg-teal-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-800 transition-all hover:shadow-lg hover:shadow-teal-200 disabled:opacity-50"
+      >
+        <MessageCircle className="w-5 h-5" />
+        {loading ? "Loading..." : label}
+      </button>
+      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+    </div>
   );
 }
