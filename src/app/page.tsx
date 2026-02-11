@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import Navigation from "@/components/Navigation";
+import ScrollReveal from "@/components/ScrollReveal";
 import {
   Monitor,
   BarChart3,
@@ -128,17 +129,18 @@ function Categories() {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((cat) => (
-            <div
-              key={cat.name}
-              className="category-pill flex flex-col items-center py-6 group"
-            >
-              <div className="w-12 h-12 rounded-xl bg-slate-100 group-hover:bg-teal-50 flex items-center justify-center mb-3 transition-colors duration-300">
-                <cat.icon className="w-6 h-6 text-slate-400 group-hover:text-teal-600 transition-colors duration-300" />
+          {categories.map((cat, i) => (
+            <ScrollReveal key={cat.name} delay={i * 75}>
+              <div
+                className="category-pill flex flex-col items-center py-6 group"
+              >
+                <div className="w-12 h-12 rounded-xl bg-slate-100 group-hover:bg-teal-50 flex items-center justify-center mb-3 transition-colors duration-300">
+                  <cat.icon className="w-6 h-6 text-slate-400 group-hover:text-teal-600 transition-colors duration-300" />
+                </div>
+                <span className="font-semibold text-slate-800">{cat.name}</span>
+                <span className="text-sm text-slate-400 mt-1">Coming soon</span>
               </div>
-              <span className="font-semibold text-slate-800">{cat.name}</span>
-              <span className="text-sm text-slate-400 mt-1">Coming soon</span>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -195,10 +197,11 @@ function ValueProps() {
         </div>
         
         <div className="grid md:grid-cols-2 gap-8">
-          {props.map((prop) => {
+          {props.map((prop, i) => {
             const colors = colorMap[prop.color];
             return (
-              <div key={prop.title} className="card flex gap-6 group">
+              <ScrollReveal key={prop.title} delay={i * 100}>
+              <div className="card flex gap-6 group">
                 <div className={`flex-shrink-0 w-14 h-14 ${colors.bg} ${colors.hover} rounded-xl flex items-center justify-center transition-colors duration-300`}>
                   <prop.icon className={`w-7 h-7 ${colors.icon}`} />
                 </div>
@@ -207,6 +210,7 @@ function ValueProps() {
                   <p className="text-slate-600 leading-relaxed">{prop.description}</p>
                 </div>
               </div>
+              </ScrollReveal>
             );
           })}
         </div>
@@ -231,6 +235,7 @@ function HowItWorks() {
         
         <div className="grid md:grid-cols-2 gap-12">
           {/* For Companies */}
+          <ScrollReveal delay={0}>
           <div className="bg-gradient-to-br from-teal-700 to-teal-800 rounded-3xl p-8 text-white shadow-xl shadow-teal-200/30">
             <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Building2 className="w-4 h-4" /> For Companies
@@ -266,8 +271,10 @@ function HowItWorks() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* For Experts */}
+          <ScrollReveal delay={150}>
           <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 text-white shadow-xl shadow-slate-300/30">
             <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <UserCircle className="w-4 h-4" /> For Experts
@@ -303,6 +310,7 @@ function HowItWorks() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
@@ -468,10 +476,10 @@ export default function Home() {
     <main>
       <Navigation />
       <Hero />
-      <Categories />
-      <ValueProps />
-      <HowItWorks />
-      <Waitlist />
+      <ScrollReveal><Categories /></ScrollReveal>
+      <ScrollReveal><ValueProps /></ScrollReveal>
+      <ScrollReveal><HowItWorks /></ScrollReveal>
+      <ScrollReveal><Waitlist /></ScrollReveal>
       <Footer />
     </main>
   );
