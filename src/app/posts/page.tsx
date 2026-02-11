@@ -33,7 +33,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
 
   let query = supabase
     .from("posts")
-    .select("id, post_type, title, description, category, categories, skills, availability, hourly_rate_min, hourly_rate_max, location, remote_ok, engagement_type, duration, created_at, user_id, profiles(full_name, avatar_url)")
+    .select("id, post_type, title, description, category, categories, skills, availability, hourly_rate_min, hourly_rate_max, location, remote_ok, engagement_type, duration, created_at, user_id")
     .eq("is_active", true);
 
   if (type === "offering" || type === "seeking") {
@@ -44,9 +44,27 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
     query = query.contains("categories", [category]);
   }
 
-  const { data: posts } = await query.order("created_at", { ascending: false });
+  const { data: posts, error: postsError } = await query.order("created_at", { ascending: false });
 
-  let filteredPosts = posts || [];
+  // Fetch profiles for post authors
+  const userIds = [...new Set((posts || []).map((p) => p.user_id))];
+  let profileMap: Record<string, { full_name: string | null; avatar_url: string | null }> = {};
+  if (userIds.length > 0) {
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, full_name, avatar_url")
+      .in("id", userIds);
+    if (profiles) {
+      profileMap = Object.fromEntries(profiles.map((p) => [p.id, p]));
+    }
+  }
+
+  const postsWithProfiles = (posts || []).map((p) => ({
+    ...p,
+    profiles: profileMap[p.user_id] || null,
+  }));
+
+  let filteredPosts = postsWithProfiles;
   if (search) {
     const searchLower = search.toLowerCase();
     filteredPosts = filteredPosts.filter(

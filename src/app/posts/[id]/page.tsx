@@ -36,7 +36,7 @@ export default async function PostDetailPage({ params }: Props) {
 
   const { data: post, error } = await supabase
     .from("posts")
-    .select("*, profiles(id, full_name, headline, avatar_url, location, linkedin_url, website_url)")
+    .select("*")
     .eq("id", id)
     .eq("is_active", true)
     .single();
@@ -45,7 +45,14 @@ export default async function PostDetailPage({ params }: Props) {
     notFound();
   }
 
-  const profile = post.profiles as {
+  // Fetch profile separately (no FK from posts to profiles)
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id, full_name, headline, avatar_url, location, linkedin_url, website_url")
+    .eq("id", post.user_id)
+    .single();
+
+  const profile = profileData as {
     id: string;
     full_name: string | null;
     headline: string | null;
