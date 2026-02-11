@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Metadata } from "next";
+import Navigation from "@/components/Navigation";
 
 export const metadata: Metadata = {
   title: "Terms of Service — Greybird",
@@ -10,26 +10,10 @@ export const metadata: Metadata = {
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-100">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image 
-              src="/logo.png" 
-              alt="Greybird" 
-              width={40} 
-              height={40}
-              className="object-contain"
-            />
-            <span className="text-xl font-bold text-slate-800">
-              Grey<span className="text-slate-600">bird</span>
-            </span>
-          </Link>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 pt-24 pb-12">
         <h1 className="text-4xl font-bold text-slate-900 mb-2">Terms of Service</h1>
         <p className="text-slate-500 mb-8">Last updated: February 10, 2026</p>
 

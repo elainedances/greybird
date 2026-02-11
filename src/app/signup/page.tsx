@@ -59,11 +59,7 @@ export default function SignupPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-        queryParams: {
-          // Pass user type through the flow
-          user_type: userType,
-        },
+        redirectTo: `${window.location.origin}/auth/callback?user_type=${userType}`,
       },
     });
 

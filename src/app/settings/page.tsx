@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Navigation from "@/components/Navigation";
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -64,23 +64,10 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-100">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Greybird" width={40} height={40} className="object-contain" />
-            <span className="text-xl font-bold text-slate-800">
-              Grey<span className="text-slate-600">bird</span>
-            </span>
-          </Link>
-          <Link href="/dashboard" className="text-slate-600 hover:text-slate-900 transition-colors">
-            ← Back to Dashboard
-          </Link>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Main */}
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 pt-24 pb-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Settings</h1>
           <p className="text-slate-600">Manage your account settings</p>
